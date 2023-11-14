@@ -34,6 +34,8 @@ HAVING
     Private Const AddCategoryCommandText As String = "INSERT INTO Categories(CategoryName, CategoryAbbr) VALUES(@CategoryName, @CategoryAbbr);"
     Private Const CategoryNameParameterText As String = "@CategoryName"
     Private Const DeleteCategoryText As String = "Delete Category"
+    Private Const ChangeNameText As String = "Change Name..."
+    Private Const ChangeAbbreviationText As String = "Change Abbreviation..."
 
     Sub Main(args As String())
         Using connection As New SqlConnection("Data Source=.\SQLEXPRESS;Initial Catalog=MediaLibrary;Integrated Security=true;TrustServerCertificate=true")
@@ -138,6 +140,8 @@ HAVING
             AnsiConsole.MarkupLine($"Media: {category.MediaCount}")
             Dim prompt As New SelectionPrompt(Of String) With {.Title = NowWhatMenuHeader}
             prompt.AddChoice(GoBackText)
+            prompt.AddChoice(ChangeNameText)
+            prompt.AddChoice(ChangeAbbreviationText)
             If category.MediaCount = 0 Then
                 prompt.AddChoice(DeleteCategoryText)
             End If
@@ -147,9 +151,36 @@ HAVING
                 Case DeleteCategoryText
                     DeleteCategory(connection, categoryId)
                     Exit Do
+                Case ChangeNameText
+                    ChangeCategoryName(connection, categoryId, category.Name)
+                Case ChangeAbbreviationText
+                    ChangeCategoryAbbreviation(connection, categoryId, category.Abbr)
             End Select
         Loop
     End Sub
+
+    Private Sub ChangeCategoryAbbreviation(connection As SqlConnection, categoryId As Integer, abbr As String)
+        Dim newAbbreviation = AnsiConsole.Ask("[olive]New Abbreviation?[/]", abbr)
+        If newAbbreviation <> abbr Then
+            Dim command = connection.CreateCommand
+            command.CommandText = "UPDATE Categories SET CategoryAbbr=@CategoryAbbr WHERE CategoryId=@CategoryId;"
+            command.Parameters.AddWithValue(CategoryAbbrParameterText, newAbbreviation)
+            command.Parameters.AddWithValue(CategoryIdParameterName, categoryId)
+            command.ExecuteNonQuery()
+        End If
+    End Sub
+
+    Private Sub ChangeCategoryName(connection As SqlConnection, categoryId As Integer, name As String)
+        Dim newName = AnsiConsole.Ask("[olive]New Name?[/]", name)
+        If newName <> name Then
+            Dim command = connection.CreateCommand
+            command.CommandText = "UPDATE Categories SET CategoryName=@CategoryName WHERE CategoryId=@CategoryId;"
+            command.Parameters.AddWithValue(CategoryNameParameterText, newName)
+            command.Parameters.AddWithValue(CategoryIdParameterName, categoryId)
+            command.ExecuteNonQuery()
+        End If
+    End Sub
+
     Private Sub DeleteCategory(connection As SqlConnection, categoryId As Integer)
         Dim command = connection.CreateCommand
         command.CommandText = "DELETE FROM Categories WHERE CategoryId=@CategoryId;"
