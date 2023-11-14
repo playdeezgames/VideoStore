@@ -16,7 +16,7 @@ Friend Module NewCategory
         command.Parameters.AddWithValue(CategoryAbbrParameterName, abbreviation)
         Dim result = CInt(command.ExecuteScalar)
         If result > 0 Then
-            AnsiConsole.MarkupLine(DuplicateAbbreviationErrorText)
+            AnsiConsole.MarkupLine(DuplicateAbbreviation)
             OkPrompt()
             Return
         End If

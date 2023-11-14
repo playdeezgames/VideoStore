@@ -1,3 +1,3 @@
 ﻿Friend Module Errors
-    Friend Const DuplicateAbbreviationErrorText As String = "[red]Duplicate Abbreviation![/]"
+    Friend Const DuplicateAbbreviation As String = "[red]Duplicate Abbreviation![/]"
 End Module
