@@ -21,7 +21,7 @@ Friend Module NewCategory
             Return
         End If
         command = connection.CreateCommand
-        command.CommandText = AddCategoryCommandText
+        command.CommandText = CategoryInsertCommandText
         command.Parameters.AddWithValue(CategoryNameParameterName, name)
         command.Parameters.AddWithValue(CategoryAbbrParameterName, abbreviation)
         command.ExecuteNonQuery()
