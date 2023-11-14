@@ -43,7 +43,7 @@ Friend Module Category
         If newAbbreviation <> abbr Then
             Dim command = connection.CreateCommand
             command.CommandText = CategoryUpdateAbbreviation
-            command.Parameters.AddWithValue(CategoryAbbr, newAbbreviation)
+            command.Parameters.AddWithValue(Parameters.CategoryAbbr, newAbbreviation)
             command.Parameters.AddWithValue(Parameters.CategoryId, categoryId)
             command.ExecuteNonQuery()
         End If
@@ -53,7 +53,7 @@ Friend Module Category
         If newName <> name Then
             Dim command = connection.CreateCommand
             command.CommandText = CategoryUpdateName
-            command.Parameters.AddWithValue(CategoryName, newName)
+            command.Parameters.AddWithValue(Parameters.CategoryName, newName)
             command.Parameters.AddWithValue(Parameters.CategoryId, categoryId)
             command.ExecuteNonQuery()
         End If

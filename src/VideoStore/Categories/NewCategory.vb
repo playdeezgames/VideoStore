@@ -13,7 +13,7 @@ Friend Module NewCategory
         End If
         Dim command = connection.CreateCommand
         command.CommandText = CategoryCheckAbbreviation
-        command.Parameters.AddWithValue(CategoryAbbr, abbreviation)
+        command.Parameters.AddWithValue(Parameters.CategoryAbbr, abbreviation)
         Dim result = CInt(command.ExecuteScalar)
         If result > 0 Then
             AnsiConsole.MarkupLine(DuplicateAbbreviation)
@@ -22,8 +22,8 @@ Friend Module NewCategory
         End If
         command = connection.CreateCommand
         command.CommandText = CategoryInsert
-        command.Parameters.AddWithValue(CategoryName, name)
-        command.Parameters.AddWithValue(CategoryAbbr, abbreviation)
+        command.Parameters.AddWithValue(Parameters.CategoryName, name)
+        command.Parameters.AddWithValue(Parameters.CategoryAbbr, abbreviation)
         command.ExecuteNonQuery()
     End Sub
 End Module
