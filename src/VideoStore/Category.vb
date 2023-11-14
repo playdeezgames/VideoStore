@@ -2,20 +2,6 @@
 
 Friend Module Category
     Private Const GoBackItemText As String = "Go Back"
-    Private Const CategoryDetailCommandText As String = "
-SELECT 
-    c.CategoryAbbr, 
-    c.CategoryName, 
-    COUNT(m.MediaId) MediaCount
-FROM 
-    Categories c 
-    LEFT JOIN Media m ON m.CategoryId=c.CategoryId
-GROUP BY
-    c.CategoryId,
-    c.CategoryAbbr,
-    c.CategoryName
-HAVING 
-    c.CategoryId=@CategoryId;"
     Private Const CategoryIdParameterName As String = "@CategoryId"
     Private Const NowWhatHeaderText As String = "[olive]Now What?[/]"
     Private Const DeleteCategoryItemText As String = "Delete Category"
@@ -65,7 +51,7 @@ HAVING
         Dim newAbbreviation = AnsiConsole.Ask("[olive]New Abbreviation?[/]", abbr)
         If newAbbreviation <> abbr Then
             Dim command = connection.CreateCommand
-            command.CommandText = "UPDATE Categories SET CategoryAbbr=@CategoryAbbr WHERE CategoryId=@CategoryId;"
+            command.CommandText = UpdateCategoryAbbreviation
             command.Parameters.AddWithValue(CategoryAbbrParameterName, newAbbreviation)
             command.Parameters.AddWithValue(CategoryIdParameterName, categoryId)
             command.ExecuteNonQuery()
@@ -75,7 +61,7 @@ HAVING
         Dim newName = AnsiConsole.Ask("[olive]New Name?[/]", name)
         If newName <> name Then
             Dim command = connection.CreateCommand
-            command.CommandText = "UPDATE Categories SET CategoryName=@CategoryName WHERE CategoryId=@CategoryId;"
+            command.CommandText = UpdateCategoryName
             command.Parameters.AddWithValue(CategoryNameParameterName, newName)
             command.Parameters.AddWithValue(CategoryIdParameterName, categoryId)
             command.ExecuteNonQuery()

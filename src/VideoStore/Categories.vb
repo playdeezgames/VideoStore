@@ -1,11 +1,6 @@
 ﻿Imports Microsoft.Data.SqlClient
 
 Friend Module Categories
-    Private Const GoBackItemText As String = "Go Back"
-    Private Const CategoriesMenuHeaderText As String = "[olive]Categories Menu:[/]"
-    Private Const NewCategoryItemText As String = "New Category..."
-    Private Const CategoryListCommandText As String = "SELECT CategoryId, CategoryAbbr, CategoryName FROM Categories ORDER BY CategoryName;"
-    Private Const CategoryReportItemText = "Category Report"
     Friend Sub RunCategories(connection As SqlConnection)
         Do
             Dim categoryList As New List(Of (Id As Integer, Abbr As String, Name As String))

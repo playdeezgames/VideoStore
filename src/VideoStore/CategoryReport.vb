@@ -2,6 +2,7 @@
 Imports System.Text
 
 Friend Module CategoryReport
+
     Friend Sub RunCategoryReport(connection As SqlConnection)
         Dim builder As New StringBuilder
         builder.Append("<html>")
@@ -16,7 +17,7 @@ Friend Module CategoryReport
         builder.Append("<th>Media Count</th>")
         builder.Append("</tr>")
         Dim command = connection.CreateCommand
-        command.CommandText = "SELECT c.CategoryName, c.CategoryAbbr, c.MediaCount FROM CategoryListItems c ORDER BY c.CategoryName;"
+        command.CommandText = CategoryReportCommand
         Using reader = command.ExecuteReader
             While reader.Read
                 builder.Append("<tr>")
