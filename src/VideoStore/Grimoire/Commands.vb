@@ -125,5 +125,51 @@ SET
 WHERE 
     {Fields.CollectionId}={Parameters.CollectionId};"
 
+    Friend ReadOnly MediaTypeCheckAbbreviation As String = $"
+SELECT
+    COUNT(1)
+FROM
+    {Tables.MediaTypes}
+WHERE
+    {Fields.MediaTypeAbbr}={Parameters.MediaTypeAbbr};"
+
+    Friend ReadOnly MediaTypeInsert As String = $"
+INSERT INTO
+    {Tables.MediaTypes}
+    (
+        {Fields.MediaTypeAbbr},
+        {Fields.MediaTypeName}
+    )
+    VALUES
+    (
+        {Parameters.MediaTypeAbbr},
+        {Parameters.MediaTypeName}
+    );"
+
+    Friend ReadOnly MediaTypeList As String = $"
+SELECT
+    {Fields.MediaTypeId},
+    {Fields.MediaTypeName},
+    {Fields.MediaTypeAbbr}
+FROM
+    {Tables.MediaTypes}
+ORDER BY
+    {Fields.MediaTypeName};"
+
+    Friend ReadOnly MediaTypeDetails As String = $"
+SELECT
+    mt.{Fields.MediaTypeId},
+    mt.{Fields.MediaTypeAbbr},
+    mt.{Fields.MediaTypeName},
+    COUNT(m.{Fields.MediaId}) AS {Fields.MediaCount}
+FROM
+    {Tables.MediaTypes} mt
+    LEFT JOIN {Tables.Media} m ON m.{Fields.MediaTypeId}=mt.{Fields.MediaTypeId}
+GROUP BY
+    mt.{Fields.MediaTypeId},
+    mt.{Fields.MediaTypeAbbr},
+    mt.{Fields.MediaTypeName}
+HAVING
+    mt.{Fields.MediaTypeId}={Parameters.MediaTypeId};"
 
 End Module

@@ -6,7 +6,7 @@ Friend Module CollectionItem
             Dim command = connection.CreateCommand
             command.CommandText = Commands.CollectionDetails
             command.Parameters.AddWithValue(Parameters.CollectionId, collectionId)
-            Dim prompt As New SelectionPrompt(Of String)
+            Dim prompt As New SelectionPrompt(Of String) With {.Title = String.Empty}
             prompt.AddChoice(MenuItems.GoBack)
             prompt.AddChoice(MenuItems.ChangeName)
             Dim collectionName As String

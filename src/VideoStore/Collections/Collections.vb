@@ -7,6 +7,7 @@ Friend Module Collections
             Dim prompt As New SelectionPrompt(Of String) With {.Title = MenuHeaders.CollectionsMenu}
             prompt.AddChoice(MenuItems.GoBack)
             prompt.AddChoice(MenuItems.NewCollection)
+            prompt.AddChoice(MenuItems.CollectionReport)
             Dim table As New Dictionary(Of String, Integer)
             Dim command = connection.CreateCommand
             command.CommandText = Commands.CollectionList

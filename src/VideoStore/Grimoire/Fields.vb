@@ -6,4 +6,7 @@
     Friend Const CollectionName = "CollectionName"
     Friend Const MediaCount = "MediaCount"
     Friend Const MediaId = "MediaId"
+    Friend Const MediaTypeAbbr = "MediaTypeAbbr"
+    Friend Const MediaTypeName = "MediaTypeName"
+    Friend Const MediaTypeId = "MediaTypeId"
 End Module
