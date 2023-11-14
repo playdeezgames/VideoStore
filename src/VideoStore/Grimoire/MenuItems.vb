@@ -8,4 +8,6 @@
     Friend Const Categories As String = "Categories"
     Friend Const Quit As String = "Quit"
     Friend Const Ok As String = "Ok"
+    Friend Const Collections = "Collections"
+    Friend Const NewCollection = "New Collection..."
 End Module

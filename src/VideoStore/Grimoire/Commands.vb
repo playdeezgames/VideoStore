@@ -20,4 +20,7 @@ HAVING
     Friend Const CategoryReport As String = "SELECT c.CategoryName, c.CategoryAbbr, c.MediaCount FROM CategoryListItems c ORDER BY c.CategoryName;"
     Friend ReadOnly CategoryUpdateAbbreviation As String = $"UPDATE Categories SET CategoryAbbr={CategoryAbbr} WHERE CategoryId={CategoryId};"
     Friend ReadOnly CategoryUpdateName As String = $"UPDATE Categories SET CategoryName={CategoryName} WHERE CategoryId={CategoryId};"
+
+    Friend ReadOnly CollectionList As String = $"SELECT c.CollectionId, c.CollectionName FROM Collections c ORDER BY CollectionName"
+    Friend ReadOnly CollectionInsert As String = $"INSERT INTO Collections(CollectionName) VALUES({Parameters.CollectionName});"
 End Module
