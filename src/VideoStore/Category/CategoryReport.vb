@@ -16,7 +16,7 @@ Friend Module CategoryReport
         builder.Append("<th>Media Count</th>")
         builder.Append("</tr>")
         Dim command = connection.CreateCommand
-        command.CommandText = CategoryReportCommand
+        command.CommandText = Commands.CategoryReport
         Using reader = command.ExecuteReader
             While reader.Read
                 builder.Append("<tr>")

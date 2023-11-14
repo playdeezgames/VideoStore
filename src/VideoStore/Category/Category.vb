@@ -5,7 +5,7 @@ Friend Module Category
         Do
             Dim category As (Id As Integer, Abbr As String, Name As String, MediaCount As Integer)
             Dim command = connection.CreateCommand()
-            command.CommandText = CategoryDetailsCommandText
+            command.CommandText = CategoryDetails
             command.Parameters.AddWithValue(CategoryIdParameterName, categoryId)
             Using reader = command.ExecuteReader()
                 reader.Read()

@@ -12,7 +12,7 @@ Friend Module NewCategory
             Return
         End If
         Dim command = connection.CreateCommand
-        command.CommandText = CategoryCheckAbbreviationCommandText
+        command.CommandText = CategoryCheckAbbreviation
         command.Parameters.AddWithValue(CategoryAbbrParameterName, abbreviation)
         Dim result = CInt(command.ExecuteScalar)
         If result > 0 Then
@@ -21,7 +21,7 @@ Friend Module NewCategory
             Return
         End If
         command = connection.CreateCommand
-        command.CommandText = CategoryInsertCommandText
+        command.CommandText = CategoryInsert
         command.Parameters.AddWithValue(CategoryNameParameterName, name)
         command.Parameters.AddWithValue(CategoryAbbrParameterName, abbreviation)
         command.ExecuteNonQuery()

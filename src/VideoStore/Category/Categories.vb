@@ -10,7 +10,7 @@ Friend Module Categories
             prompt.AddChoice(CategoryReportItemText)
             Dim table As New Dictionary(Of String, Integer)
             Using command = connection.CreateCommand
-                command.CommandText = CategoryListCommandText
+                command.CommandText = Commands.CategoryList
                 Using reader = command.ExecuteReader
                     While reader.Read
                         Dim item As (Id As Integer, Abbr As String, Name As String) = (reader.GetInt32(0), reader.GetString(1), reader.GetString(2))
