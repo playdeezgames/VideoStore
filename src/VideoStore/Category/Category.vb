@@ -17,21 +17,21 @@ Friend Module Category
             AnsiConsole.MarkupLine($"Name: {category.Name}")
             AnsiConsole.MarkupLine($"Media: {category.MediaCount}")
             Dim prompt As New SelectionPrompt(Of String) With {.Title = NowWhat}
-            prompt.AddChoice(GoBackItemText)
-            prompt.AddChoice(ChangeNameItemText)
-            prompt.AddChoice(ChangeAbbreviationItemText)
+            prompt.AddChoice(GoBack)
+            prompt.AddChoice(ChangeName)
+            prompt.AddChoice(ChangeAbbreviation)
             If category.MediaCount = 0 Then
-                prompt.AddChoice(DeleteCategoryItemText)
+                prompt.AddChoice(MenuItems.DeleteCategory)
             End If
             Select Case AnsiConsole.Prompt(prompt)
-                Case GoBackItemText
+                Case GoBack
                     Exit Do
-                Case DeleteCategoryItemText
+                Case MenuItems.DeleteCategory
                     DeleteCategory.DeleteCategory(connection, categoryId)
                     Exit Do
-                Case ChangeNameItemText
+                Case ChangeName
                     ChangeCategoryName(connection, categoryId, category.Name)
-                Case ChangeAbbreviationItemText
+                Case ChangeAbbreviation
                     ChangeCategoryAbbreviation(connection, categoryId, category.Abbr)
             End Select
         Loop

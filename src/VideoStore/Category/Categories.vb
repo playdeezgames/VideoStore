@@ -5,9 +5,9 @@ Friend Module Categories
         Do
             Dim categoryList As New List(Of (Id As Integer, Abbr As String, Name As String))
             Dim prompt As New SelectionPrompt(Of String) With {.Title = CategoriesMenu}
-            prompt.AddChoice(GoBackItemText)
-            prompt.AddChoice(NewCategoryItemText)
-            prompt.AddChoice(CategoryReportItemText)
+            prompt.AddChoice(GoBack)
+            prompt.AddChoice(MenuItems.NewCategory)
+            prompt.AddChoice(MenuItems.CategoryReport)
             Dim table As New Dictionary(Of String, Integer)
             Using command = connection.CreateCommand
                 command.CommandText = Commands.CategoryList
@@ -24,11 +24,11 @@ Friend Module Categories
             AnsiConsole.Clear()
             Dim answer = AnsiConsole.Prompt(prompt)
             Select Case answer
-                Case GoBackItemText
+                Case GoBack
                     Exit Do
-                Case NewCategoryItemText
+                Case MenuItems.NewCategory
                     RunNewCategory(connection)
-                Case CategoryReportItemText
+                Case MenuItems.CategoryReport
                     RunCategoryReport(connection)
                 Case Else
                     RunCategory(connection, table(answer))

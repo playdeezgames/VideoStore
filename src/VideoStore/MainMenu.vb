@@ -4,12 +4,12 @@ Friend Module MainMenu
     Friend Sub DoMainMenu(connection As SqlConnection)
         Do
             Dim prompt As New SelectionPrompt(Of String) With {.Title = MenuHeaders.MainMenu}
-            prompt.AddChoice(CategoriesItemText)
-            prompt.AddChoice(QuitItemText)
+            prompt.AddChoice(MenuItems.Categories)
+            prompt.AddChoice(Quit)
             Select Case AnsiConsole.Prompt(prompt)
-                Case CategoriesItemText
+                Case MenuItems.Categories
                     RunCategories(connection)
-                Case QuitItemText
+                Case Quit
                     Exit Do
             End Select
         Loop
