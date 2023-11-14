@@ -1,7 +1,7 @@
 ﻿Imports Microsoft.Data.SqlClient
 
 Friend Module Category
-    Friend Sub RunCategory(connection As SqlConnection, categoryId As Integer)
+    Friend Sub Run(connection As SqlConnection, categoryId As Integer)
         Do
             Dim category As (Id As Integer, Abbr As String, Name As String, MediaCount As Integer)
             Dim command = connection.CreateCommand()

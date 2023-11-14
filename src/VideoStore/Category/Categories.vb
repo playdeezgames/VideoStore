@@ -31,7 +31,7 @@ Friend Module Categories
                 Case MenuItems.CategoryReport
                     RunCategoryReport(connection)
                 Case Else
-                    RunCategory(connection, table(answer))
+                    Category.Run(connection, table(answer))
             End Select
         Loop
     End Sub
