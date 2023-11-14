@@ -1,41 +1,128 @@
 ﻿Friend Module Commands
-    Friend ReadOnly CategoryCheckAbbreviation As String = $"SELECT COUNT(1) FROM Categories WHERE CategoryAbbr={CategoryAbbr};"
-    Friend ReadOnly CategoryDelete As String = $"DELETE FROM Categories WHERE CategoryId={CategoryId};"
+    Friend ReadOnly CategoryCheckAbbreviation As String = $"
+SELECT 
+    COUNT(1) 
+FROM 
+    {Tables.Categories} 
+WHERE 
+    {Fields.CategoryAbbr}={Parameters.CategoryAbbr};"
+
+    Friend ReadOnly CategoryDelete As String = $"
+DELETE FROM 
+    {Tables.Categories} 
+WHERE 
+    {Fields.CategoryId}={Parameters.CategoryId};"
+
     Friend ReadOnly CategoryDetails As String = $"
 SELECT 
-    c.CategoryAbbr, 
-    c.CategoryName, 
-    COUNT(m.MediaId) MediaCount
+    c.{Fields.CategoryAbbr}, 
+    c.{Fields.CategoryName}, 
+    COUNT(m.{Fields.MediaId}) {Fields.MediaCount}
 FROM 
-    Categories c 
-    LEFT JOIN Media m ON m.CategoryId=c.CategoryId
+    {Tables.Categories} c 
+    LEFT JOIN {Tables.Media} m ON m.{Fields.CategoryId}=c.{Fields.CategoryId}
 GROUP BY
-    c.CategoryId,
-    c.CategoryAbbr,
-    c.CategoryName
+    c.{Fields.CategoryId},
+    c.{Fields.CategoryAbbr},
+    c.{Fields.CategoryName}
 HAVING 
-    c.CategoryId={CategoryId};"
-    Friend ReadOnly CategoryInsert As String = $"INSERT INTO Categories(CategoryName, CategoryAbbr) VALUES({CategoryName}, {CategoryAbbr});"
-    Friend Const CategoryList As String = "SELECT CategoryId, CategoryAbbr, CategoryName FROM Categories ORDER BY CategoryName;"
-    Friend Const CategoryReport As String = "SELECT c.CategoryName, c.CategoryAbbr, c.MediaCount FROM CategoryListItems c ORDER BY c.CategoryName;"
-    Friend ReadOnly CategoryUpdateAbbreviation As String = $"UPDATE Categories SET CategoryAbbr={CategoryAbbr} WHERE CategoryId={CategoryId};"
-    Friend ReadOnly CategoryUpdateName As String = $"UPDATE Categories SET CategoryName={CategoryName} WHERE CategoryId={CategoryId};"
+    c.{Fields.CategoryId}={Parameters.CategoryId};"
 
-    Friend ReadOnly CollectionList As String = $"SELECT c.CollectionId, c.CollectionName FROM Collections c ORDER BY CollectionName"
-    Friend ReadOnly CollectionInsert As String = $"INSERT INTO Collections(CollectionName) VALUES({Parameters.CollectionName});"
+    Friend ReadOnly CategoryInsert As String = $"
+INSERT INTO 
+    {Tables.Categories}
+    (
+        {Fields.CategoryName}, 
+        {Fields.CategoryAbbr}
+    ) 
+    VALUES
+    (
+        {Parameters.CategoryName}, 
+        {Parameters.CategoryAbbr}
+    );"
+
+    Friend ReadOnly CategoryList As String = $"
+SELECT 
+    {Fields.CategoryId}, 
+    {Fields.CategoryAbbr}, 
+    {Fields.CategoryName} 
+FROM 
+    {Tables.Categories} 
+ORDER BY 
+    {Fields.CategoryName};"
+
+    Friend ReadOnly CategoryReport As String = $"
+SELECT 
+    c.{Fields.CategoryName}, 
+    c.{Fields.CategoryAbbr}, 
+    c.{Fields.MediaCount} 
+FROM 
+    {Tables.CategoryListItems} c 
+ORDER BY 
+    c.{Fields.CategoryName};"
+
+    Friend ReadOnly CategoryUpdateAbbreviation As String = $"
+UPDATE 
+    {Tables.Categories} 
+SET 
+    {Fields.CategoryAbbr}={Parameters.CategoryAbbr} 
+WHERE 
+    {Fields.CategoryId}={Parameters.CategoryId};"
+
+    Friend ReadOnly CategoryUpdateName As String = $"
+UPDATE 
+    {Tables.Categories} 
+SET 
+    {Fields.CategoryName}={Parameters.CategoryName} 
+WHERE 
+    {Fields.CategoryId}={Parameters.CategoryId};"
+
+    Friend ReadOnly CollectionList As String = $"
+SELECT 
+    c.{Fields.CollectionId}, 
+    c.{Fields.CollectionName} 
+FROM 
+    {Tables.Collections} c 
+ORDER BY 
+    {Fields.CollectionName};"
+
+    Friend ReadOnly CollectionInsert As String = $"
+INSERT INTO 
+    {Tables.Collections}
+    (
+        {Fields.CollectionName}
+    ) 
+    VALUES
+    (
+        {Parameters.CollectionName}
+    );"
+
     Friend ReadOnly CollectionDetails As String = $"
 SELECT 
-    c.CollectionId, 
-    c.CollectionName, 
-    COUNT(m.MediaId) MediaCount
+    c.{Fields.CollectionId}, 
+    c.{Fields.CollectionName}, 
+    COUNT(m.MediaId) {Fields.MediaCount}
 FROM 
-    Collections c 
-    LEFT JOIN Media m ON c.CollectionId=m.CollectionId 
+    {Tables.Collections} c 
+    LEFT JOIN {Tables.Media} m ON c.{Fields.CollectionId}=m.{Fields.CollectionId} 
 GROUP BY 
-    c.CollectionId, 
-    c.CollectionName 
+    c.{Fields.CollectionId}, 
+    c.{Fields.CollectionName} 
 HAVING 
-    c.CollectionId={Parameters.CollectionId};"
-    Friend ReadOnly CollectionDelete As String = $"DELETE FROM Collections WHERE CollectionId={Parameters.CollectionId}"
-    Friend ReadOnly CollectionUpdateName As String = $"UPDATE Collections SET CollectionName={Parameters.CollectionName} WHERE CollectionId={Parameters.CollectionId};"
+    c.{Fields.CollectionId}={Parameters.CollectionId};"
+
+    Friend ReadOnly CollectionDelete As String = $"
+DELETE FROM 
+    {Tables.Collections} 
+WHERE 
+    {Fields.CollectionId}={Parameters.CollectionId}"
+
+    Friend ReadOnly CollectionUpdateName As String = $"
+UPDATE 
+    {Tables.Collections} 
+SET 
+    {Fields.CollectionName}={Parameters.CollectionName} 
+WHERE 
+    {Fields.CollectionId}={Parameters.CollectionId};"
+
 End Module
