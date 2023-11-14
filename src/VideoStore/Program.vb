@@ -1,4 +1,4 @@
-Imports System.ComponentModel.DataAnnotations
+Imports System.Text
 Imports Microsoft.Data.SqlClient
 
 Module Program
@@ -36,6 +36,7 @@ HAVING
     Private Const DeleteCategoryText As String = "Delete Category"
     Private Const ChangeNameText As String = "Change Name..."
     Private Const ChangeAbbreviationText As String = "Change Abbreviation..."
+    Private Const CategoryReportText = "Category Report"
 
     Sub Main(args As String())
         Using connection As New SqlConnection("Data Source=.\SQLEXPRESS;Initial Catalog=MediaLibrary;Integrated Security=true;TrustServerCertificate=true")
@@ -66,6 +67,7 @@ HAVING
             Dim prompt As New SelectionPrompt(Of String) With {.Title = CategoriesMenuHeader}
             prompt.AddChoice(GoBackText)
             prompt.AddChoice(NewCategoryText)
+            prompt.AddChoice(CategoryReportText)
             Dim table As New Dictionary(Of String, Integer)
             Using command = connection.CreateCommand
                 command.CommandText = CategoryListCommandText
@@ -86,10 +88,44 @@ HAVING
                     Exit Do
                 Case NewCategoryText
                     RunNewCategory(connection)
+                Case CategoryReportText
+                    RunCategoryReport(connection)
                 Case Else
                     RunCategory(connection, table(answer))
             End Select
         Loop
+    End Sub
+    Private Sub RunCategoryReport(connection As SqlConnection)
+        Dim builder As New StringBuilder
+        builder.Append("<html>")
+        builder.Append("<head>")
+        builder.Append($"<title>Category Report {DateTimeOffset.Now}</title>")
+        builder.Append("</head>")
+        builder.Append("<body>")
+        builder.Append("<table>")
+        builder.Append("<tr>")
+        builder.Append("<th>Category Name</th>")
+        builder.Append("<th>Abbreviation</th>")
+        builder.Append("<th>Media Count</th>")
+        builder.Append("</tr>")
+        Dim command = connection.CreateCommand
+        command.CommandText = "SELECT c.CategoryName, c.CategoryAbbr, c.MediaCount FROM CategoryListItems c ORDER BY c.CategoryName;"
+        Using reader = command.ExecuteReader
+            While reader.Read
+                builder.Append("<tr>")
+                builder.Append($"<td>{reader.GetString(0)}</td>")
+                builder.Append($"<td>{reader.GetString(1)}</td>")
+                builder.Append($"<td>{reader.GetInt32(2)}</td>")
+                builder.Append("</tr>")
+            End While
+        End Using
+        builder.Append("</table>")
+        builder.Append("</body>")
+        builder.Append("</html>")
+        Dim filename = $"CategoryReport{DateTimeOffset.Now:yyyyMMddHHmmss}.html"
+        File.WriteAllText(filename, builder.ToString)
+        AnsiConsole.MarkupLine($"Report Saved as {filename}")
+        OkPrompt()
     End Sub
     Private Sub RunNewCategory(connection As SqlConnection)
         AnsiConsole.Clear()
