@@ -1,3 +1,4 @@
+Imports System.ComponentModel.DataAnnotations
 Imports Microsoft.Data.SqlClient
 
 Module Program
@@ -32,6 +33,7 @@ HAVING
     Private Const DuplicateAbbreviationErrorText As String = "[red]Duplicate Abbreviation![/]"
     Private Const AddCategoryCommandText As String = "INSERT INTO Categories(CategoryName, CategoryAbbr) VALUES(@CategoryName, @CategoryAbbr);"
     Private Const CategoryNameParameterText As String = "@CategoryName"
+    Private Const DeleteCategoryText As String = "Delete Category"
 
     Sub Main(args As String())
         Using connection As New SqlConnection("Data Source=.\SQLEXPRESS;Initial Catalog=MediaLibrary;Integrated Security=true;TrustServerCertificate=true")
@@ -136,10 +138,22 @@ HAVING
             AnsiConsole.MarkupLine($"Media: {category.MediaCount}")
             Dim prompt As New SelectionPrompt(Of String) With {.Title = NowWhatMenuHeader}
             prompt.AddChoice(GoBackText)
+            If category.MediaCount = 0 Then
+                prompt.AddChoice(DeleteCategoryText)
+            End If
             Select Case AnsiConsole.Prompt(prompt)
                 Case GoBackText
                     Exit Do
+                Case DeleteCategoryText
+                    DeleteCategory(connection, categoryId)
+                    Exit Do
             End Select
         Loop
+    End Sub
+    Private Sub DeleteCategory(connection As SqlConnection, categoryId As Integer)
+        Dim command = connection.CreateCommand
+        command.CommandText = "DELETE FROM Categories WHERE CategoryId=@CategoryId;"
+        command.Parameters.AddWithValue(CategoryIdParameterName, categoryId)
+        command.ExecuteNonQuery()
     End Sub
 End Module
