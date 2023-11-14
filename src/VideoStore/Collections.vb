@@ -23,6 +23,8 @@ Friend Module Collections
                     Exit Do
                 Case MenuItems.NewCollection
                     NewCollection.Run(connection)
+                Case Else
+                    CollectionItem.Run(connection, table(answer))
             End Select
         Loop
     End Sub

@@ -23,4 +23,19 @@ HAVING
 
     Friend ReadOnly CollectionList As String = $"SELECT c.CollectionId, c.CollectionName FROM Collections c ORDER BY CollectionName"
     Friend ReadOnly CollectionInsert As String = $"INSERT INTO Collections(CollectionName) VALUES({Parameters.CollectionName});"
+    Friend ReadOnly CollectionDetails As String = $"
+SELECT 
+    c.CollectionId, 
+    c.CollectionName, 
+    COUNT(m.MediaId) MediaCount
+FROM 
+    Collections c 
+    LEFT JOIN Media m ON c.CollectionId=m.CollectionId 
+GROUP BY 
+    c.CollectionId, 
+    c.CollectionName 
+HAVING 
+    c.CollectionId={Parameters.CollectionId};"
+    Friend ReadOnly CollectionDelete As String = $"DELETE FROM Collections WHERE CollectionId={Parameters.CollectionId}"
+    Friend ReadOnly CollectionUpdateName As String = $"UPDATE Collections SET CollectionName={Parameters.CollectionName} WHERE CollectionId={Parameters.CollectionId};"
 End Module

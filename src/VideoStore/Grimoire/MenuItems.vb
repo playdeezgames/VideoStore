@@ -10,4 +10,5 @@
     Friend Const Ok As String = "Ok"
     Friend Const Collections = "Collections"
     Friend Const NewCollection = "New Collection..."
+    Friend Const DeleteCollection = "Delete Collection"
 End Module

@@ -3,4 +3,5 @@
     Friend Const CategoryAbbr As String = "@CategoryAbbr"
     Friend Const CategoryName As String = "@CategoryName"
     Friend Const CollectionName As String = "@CollectionName"
+    Friend Const CollectionId As String = "@CollectionId"
 End Module
