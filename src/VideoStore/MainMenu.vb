@@ -8,7 +8,7 @@ Friend Module MainMenu
             prompt.AddChoice(Quit)
             Select Case AnsiConsole.Prompt(prompt)
                 Case MenuItems.Categories
-                    RunCategories(connection)
+                    Categories.Run(connection)
                 Case Quit
                     Exit Do
             End Select
