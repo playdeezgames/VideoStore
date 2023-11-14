@@ -1,15 +1,6 @@
 ﻿Imports Microsoft.Data.SqlClient
 
 Friend Module Category
-    Private Const GoBackItemText As String = "Go Back"
-    Private Const CategoryIdParameterName As String = "@CategoryId"
-    Private Const NowWhatHeaderText As String = "[olive]Now What?[/]"
-    Private Const DeleteCategoryItemText As String = "Delete Category"
-    Private Const ChangeNameItemText As String = "Change Name..."
-    Private Const ChangeAbbreviationItemText As String = "Change Abbreviation..."
-    Private Const CategoryAbbrParameterName As String = "@CategoryAbbr"
-    Private Const CategoryNameParameterName As String = "@CategoryName"
-
     Friend Sub RunCategory(connection As SqlConnection, categoryId As Integer)
         Do
             Dim category As (Id As Integer, Abbr As String, Name As String, MediaCount As Integer)
