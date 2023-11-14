@@ -7,4 +7,5 @@
     Friend Const ChangeAbbreviationItemText As String = "Change Abbreviation..."
     Friend Const CategoriesItemText As String = "Categories"
     Friend Const QuitItemText As String = "Quit"
+    Friend Const OkItemText As String = "Ok"
 End Module
