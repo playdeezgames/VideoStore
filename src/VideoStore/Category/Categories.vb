@@ -27,7 +27,7 @@ Friend Module Categories
                 Case GoBack
                     Exit Do
                 Case MenuItems.NewCategory
-                    RunNewCategory(connection)
+                    NewCategory.Run(connection)
                 Case MenuItems.CategoryReport
                     CategoryReport.Run(connection)
                 Case Else

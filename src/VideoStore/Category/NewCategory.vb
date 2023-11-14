@@ -1,7 +1,7 @@
 ﻿Imports Microsoft.Data.SqlClient
 
 Friend Module NewCategory
-    Friend Sub RunNewCategory(connection As SqlConnection)
+    Friend Sub Run(connection As SqlConnection)
         AnsiConsole.Clear()
         Dim name = AnsiConsole.Ask(NewCategoryName, String.Empty)
         If String.IsNullOrWhiteSpace(name) Then
