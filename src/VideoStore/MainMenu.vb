@@ -3,7 +3,7 @@
 Friend Module MainMenu
     Friend Sub DoMainMenu(connection As SqlConnection)
         Do
-            Dim prompt As New SelectionPrompt(Of String) With {.Title = MainMenuHeaderText}
+            Dim prompt As New SelectionPrompt(Of String) With {.Title = MenuHeaders.MainMenu}
             prompt.AddChoice(CategoriesItemText)
             prompt.AddChoice(QuitItemText)
             Select Case AnsiConsole.Prompt(prompt)

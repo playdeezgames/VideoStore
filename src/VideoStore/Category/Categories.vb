@@ -4,7 +4,7 @@ Friend Module Categories
     Friend Sub RunCategories(connection As SqlConnection)
         Do
             Dim categoryList As New List(Of (Id As Integer, Abbr As String, Name As String))
-            Dim prompt As New SelectionPrompt(Of String) With {.Title = CategoriesMenuHeaderText}
+            Dim prompt As New SelectionPrompt(Of String) With {.Title = CategoriesMenu}
             prompt.AddChoice(GoBackItemText)
             prompt.AddChoice(NewCategoryItemText)
             prompt.AddChoice(CategoryReportItemText)

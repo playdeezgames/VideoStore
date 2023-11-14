@@ -16,7 +16,7 @@ Friend Module Category
             AnsiConsole.MarkupLine($"Abbreviation: {category.Abbr}")
             AnsiConsole.MarkupLine($"Name: {category.Name}")
             AnsiConsole.MarkupLine($"Media: {category.MediaCount}")
-            Dim prompt As New SelectionPrompt(Of String) With {.Title = NowWhatHeaderText}
+            Dim prompt As New SelectionPrompt(Of String) With {.Title = NowWhat}
             prompt.AddChoice(GoBackItemText)
             prompt.AddChoice(ChangeNameItemText)
             prompt.AddChoice(ChangeAbbreviationItemText)
