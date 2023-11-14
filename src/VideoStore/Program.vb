@@ -25,6 +25,13 @@ HAVING
     Private Const CategoryIdParameterName As String = "@CategoryId"
     Private Const NowWhatMenuHeader As String = "[olive]Now What?[/]"
     Private Const OkText As String = "Ok"
+    Private Const NewCategoryNamePrompt As String = "[olive]New Category Name?[/]"
+    Private Const NewCategoryAbbreviationPrompt As String = "[olive]New Category Abbreviation?[/]"
+    Private Const CategoryCheckAbbreviationCommandText As String = "SELECT COUNT(1) FROM Categories WHERE CategoryAbbr=@CategoryAbbr;"
+    Private Const CategoryAbbrParameterText As String = "@CategoryAbbr"
+    Private Const DuplicateAbbreviationErrorText As String = "[red]Duplicate Abbreviation![/]"
+    Private Const AddCategoryCommandText As String = "INSERT INTO Categories(CategoryName, CategoryAbbr) VALUES(@CategoryName, @CategoryAbbr);"
+    Private Const CategoryNameParameterText As String = "@CategoryName"
 
     Sub Main(args As String())
         Using connection As New SqlConnection("Data Source=.\SQLEXPRESS;Initial Catalog=MediaLibrary;Integrated Security=true;TrustServerCertificate=true")
@@ -63,8 +70,8 @@ HAVING
                         Dim item As (Id As Integer, Abbr As String, Name As String) = (reader.GetInt32(0), reader.GetString(1), reader.GetString(2))
                         categoryList.Add(item)
                         Dim fullName = $"{item.Name}({item.Abbr})#{item.Id}"
-                        prompt.AddChoice(fullname)
-                        table(fullname) = item.Id
+                        prompt.AddChoice(fullName)
+                        table(fullName) = item.Id
                     End While
                 End Using
             End Using
@@ -82,27 +89,27 @@ HAVING
     End Sub
     Private Sub RunNewCategory(connection As SqlConnection)
         AnsiConsole.Clear()
-        Dim name = AnsiConsole.Ask("New Category Name? ", String.Empty)
+        Dim name = AnsiConsole.Ask(NewCategoryNamePrompt, String.Empty)
         If String.IsNullOrWhiteSpace(name) Then
             Return
         End If
-        Dim abbreviation = AnsiConsole.Ask("New Category Abbreviation?", String.Empty)
+        Dim abbreviation = AnsiConsole.Ask(NewCategoryAbbreviationPrompt, String.Empty)
         If String.IsNullOrWhiteSpace(abbreviation) Then
             Return
         End If
         Dim command = connection.CreateCommand
-        command.CommandText = "SELECT COUNT(1) FROM Categories WHERE CategoryAbbr=@CategoryAbbr;"
-        command.Parameters.AddWithValue("@CategoryAbbr", abbreviation)
+        command.CommandText = CategoryCheckAbbreviationCommandText
+        command.Parameters.AddWithValue(CategoryAbbrParameterText, abbreviation)
         Dim result = CInt(command.ExecuteScalar)
         If result > 0 Then
-            AnsiConsole.MarkupLine("[red]Duplicate Abbreviation![/]")
+            AnsiConsole.MarkupLine(DuplicateAbbreviationErrorText)
             OkPrompt()
             Return
         End If
         command = connection.CreateCommand
-        command.CommandText = "INSERT INTO Categories(CategoryName, CategoryAbbr) VALUES(@CategoryName, @CategoryAbbr);"
-        command.Parameters.AddWithValue("@CategoryName", name)
-        command.Parameters.AddWithValue("@CategoryAbbr", abbreviation)
+        command.CommandText = AddCategoryCommandText
+        command.Parameters.AddWithValue(CategoryNameParameterText, name)
+        command.Parameters.AddWithValue(CategoryAbbrParameterText, abbreviation)
         command.ExecuteNonQuery()
     End Sub
 
