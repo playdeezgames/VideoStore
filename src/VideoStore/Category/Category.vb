@@ -27,7 +27,7 @@ Friend Module Category
                 Case GoBack
                     Exit Do
                 Case MenuItems.DeleteCategory
-                    DeleteCategory.DeleteCategory(connection, categoryId)
+                    DeleteCategory.Run(connection, categoryId)
                     Exit Do
                 Case ChangeName
                     ChangeCategoryName(connection, categoryId, category.Name)
