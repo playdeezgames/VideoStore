@@ -1,7 +1,7 @@
 ﻿Imports Microsoft.Data.SqlClient
 
 Friend Module MainMenu
-    Friend Sub DoMainMenu(connection As SqlConnection)
+    Friend Sub Run(connection As SqlConnection)
         Do
             Dim prompt As New SelectionPrompt(Of String) With {.Title = MenuHeaders.MainMenu}
             prompt.AddChoice(MenuItems.Categories)
