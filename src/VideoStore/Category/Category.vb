@@ -6,7 +6,7 @@ Friend Module Category
             Dim category As (Id As Integer, Abbr As String, Name As String, MediaCount As Integer)
             Dim command = connection.CreateCommand()
             command.CommandText = CategoryDetails
-            command.Parameters.AddWithValue(CategoryIdParameterName, categoryId)
+            command.Parameters.AddWithValue(Parameters.CategoryId, categoryId)
             Using reader = command.ExecuteReader()
                 reader.Read()
                 category = (categoryId, reader.GetString(0), reader.GetString(1), reader.GetInt32(2))
@@ -43,8 +43,8 @@ Friend Module Category
         If newAbbreviation <> abbr Then
             Dim command = connection.CreateCommand
             command.CommandText = CategoryUpdateAbbreviation
-            command.Parameters.AddWithValue(CategoryAbbrParameterName, newAbbreviation)
-            command.Parameters.AddWithValue(CategoryIdParameterName, categoryId)
+            command.Parameters.AddWithValue(CategoryAbbr, newAbbreviation)
+            command.Parameters.AddWithValue(Parameters.CategoryId, categoryId)
             command.ExecuteNonQuery()
         End If
     End Sub
@@ -53,8 +53,8 @@ Friend Module Category
         If newName <> name Then
             Dim command = connection.CreateCommand
             command.CommandText = CategoryUpdateName
-            command.Parameters.AddWithValue(CategoryNameParameterName, newName)
-            command.Parameters.AddWithValue(CategoryIdParameterName, categoryId)
+            command.Parameters.AddWithValue(CategoryName, newName)
+            command.Parameters.AddWithValue(Parameters.CategoryId, categoryId)
             command.ExecuteNonQuery()
         End If
     End Sub
