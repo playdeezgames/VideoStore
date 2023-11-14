@@ -1,13 +1,6 @@
 ﻿Imports Microsoft.Data.SqlClient
 
 Friend Module NewCategory
-    Private Const NewCategoryNamePromptText As String = "[olive]New Category Name?[/]"
-    Private Const NewCategoryAbbreviationPromptText As String = "[olive]New Category Abbreviation?[/]"
-    Private Const CategoryCheckAbbreviationCommandText As String = "SELECT COUNT(1) FROM Categories WHERE CategoryAbbr=@CategoryAbbr;"
-    Private Const CategoryAbbrParameterName As String = "@CategoryAbbr"
-    Private Const DuplicateAbbreviationErrorText As String = "[red]Duplicate Abbreviation![/]"
-    Private Const AddCategoryCommandText As String = "INSERT INTO Categories(CategoryName, CategoryAbbr) VALUES(@CategoryName, @CategoryAbbr);"
-    Private Const CategoryNameParameterName As String = "@CategoryName"
     Friend Sub RunNewCategory(connection As SqlConnection)
         AnsiConsole.Clear()
         Dim name = AnsiConsole.Ask(NewCategoryNamePromptText, String.Empty)

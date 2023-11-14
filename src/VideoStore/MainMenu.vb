@@ -1,9 +1,6 @@
 ﻿Imports Microsoft.Data.SqlClient
 
 Friend Module MainMenu
-    Private Const CategoriesItemText As String = "Categories"
-    Private Const QuitItemText As String = "Quit"
-    Private Const MainMenuHeaderText As String = "[olive]Main Menu:[/]"
     Friend Sub DoMainMenu(connection As SqlConnection)
         Do
             Dim prompt As New SelectionPrompt(Of String) With {.Title = MainMenuHeaderText}

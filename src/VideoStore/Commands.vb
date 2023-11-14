@@ -18,4 +18,6 @@ HAVING
     Friend Const UpdateCategoryName As String = "UPDATE Categories SET CategoryName=@CategoryName WHERE CategoryId=@CategoryId;"
     Friend Const CategoryReportCommand As String = "SELECT c.CategoryName, c.CategoryAbbr, c.MediaCount FROM CategoryListItems c ORDER BY c.CategoryName;"
     Friend Const CategoryDelete As String = "DELETE FROM Categories WHERE CategoryId=@CategoryId;"
+    Friend Const CategoryCheckAbbreviationCommandText As String = "SELECT COUNT(1) FROM Categories WHERE CategoryAbbr=@CategoryAbbr;"
+    Friend Const AddCategoryCommandText As String = "INSERT INTO Categories(CategoryName, CategoryAbbr) VALUES(@CategoryName, @CategoryAbbr);"
 End Module

@@ -2,7 +2,6 @@
 Imports System.Text
 
 Friend Module CategoryReport
-
     Friend Sub RunCategoryReport(connection As SqlConnection)
         Dim builder As New StringBuilder
         builder.Append("<html>")
