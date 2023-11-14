@@ -29,7 +29,7 @@ Friend Module Categories
                 Case MenuItems.NewCategory
                     RunNewCategory(connection)
                 Case MenuItems.CategoryReport
-                    RunCategoryReport(connection)
+                    CategoryReport.Run(connection)
                 Case Else
                     Category.Run(connection, table(answer))
             End Select
