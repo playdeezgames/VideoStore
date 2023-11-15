@@ -19,7 +19,7 @@ Friend Module NewMedia
                 command.Parameters.AddWithValue(Parameters.CollectionId, collectionId.Value)
             End If
             command.ExecuteNonQuery()
-        Loop
+        Loop While AnsiConsole.Confirm(Prompts.AddAnother)
     End Sub
 
     Private Function PickCollection(connection As SqlConnection) As Integer?

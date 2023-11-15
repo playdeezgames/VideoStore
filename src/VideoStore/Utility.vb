@@ -42,6 +42,5 @@ Friend Module Utility
         File.WriteAllText(filename, builder.ToString)
         AnsiConsole.MarkupLine($"Report Saved as {filename}")
         OkPrompt()
-
     End Sub
 End Module

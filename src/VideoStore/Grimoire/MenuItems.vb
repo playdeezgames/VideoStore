@@ -20,4 +20,6 @@
     Friend Const ChangeNameFilter = "Change Name Filter..."
     Friend Const NewMedia = "New Media..."
     Friend Const NoCollection = "(no collection)"
+    Friend Const Yes = "Yes"
+    Friend Const No = "No"
 End Module
