@@ -1,5 +1,4 @@
 ﻿Imports Microsoft.Data.SqlClient
-Imports Microsoft.Identity.Client
 
 Public Class DataStore
     Public Property Connection As SqlConnection
@@ -16,6 +15,18 @@ Public Class DataStore
                 End Using
             End Using
             Return result
+        End Get
+    End Property
+
+    Friend ReadOnly Property Category(categoryId As Integer) As (Id As Integer, Abbr As String, Name As String, MediaCount As Integer)
+        Get
+            Dim command = Connection.CreateCommand()
+            command.CommandText = CategoryDetails
+            command.Parameters.AddWithValue(Parameters.CategoryId, categoryId)
+            Using reader = command.ExecuteReader()
+                reader.Read()
+                Return (categoryId, reader.GetString(0), reader.GetString(1), reader.GetInt32(2))
+            End Using
         End Get
     End Property
 

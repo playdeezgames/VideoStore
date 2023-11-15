@@ -3,14 +3,7 @@
 Friend Module Category
     Friend Sub Run(store As DataStore, categoryId As Integer)
         Do
-            Dim category As (Id As Integer, Abbr As String, Name As String, MediaCount As Integer)
-            Dim command = store.Connection.CreateCommand()
-            command.CommandText = CategoryDetails
-            command.Parameters.AddWithValue(Parameters.CategoryId, categoryId)
-            Using reader = command.ExecuteReader()
-                reader.Read()
-                category = (categoryId, reader.GetString(0), reader.GetString(1), reader.GetInt32(2))
-            End Using
+            Dim category As (Id As Integer, Abbr As String, Name As String, MediaCount As Integer) = store.Category(categoryId)
             AnsiConsole.Clear()
             AnsiConsole.MarkupLine($"Id: {category.Id}")
             AnsiConsole.MarkupLine($"Abbreviation: {category.Abbr}")
