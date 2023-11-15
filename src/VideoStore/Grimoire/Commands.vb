@@ -190,4 +190,20 @@ DELETE FROM
     {Tables.MediaTypes}
 WHERE
     {Fields.MediaTypeId}={Parameters.MediaTypeId};"
+
+    Friend ReadOnly MediaTypeReport As String = $"
+SELECT
+    mt.{Fields.MediaTypeName},
+    mt.{Fields.MediaTypeAbbr},
+    COUNT(m.{Fields.MediaId}) AS {Fields.MediaCount}
+FROM
+    {Tables.MediaTypes} mt
+    LEFT JOIN {Tables.Media} m ON m.{Fields.MediaTypeId}=mt.{Fields.MediaTypeId}
+GROUP BY
+    mt.{Fields.MediaTypeId},
+    mt.{Fields.MediaTypeAbbr},
+    mt.{Fields.MediaTypeName}
+ORDER BY
+    mt.{Fields.MediaTypeName};"
+
 End Module

@@ -6,6 +6,7 @@ Friend Module MediaTypes
             Dim prompt As New SelectionPrompt(Of String) With {.Title = MenuHeaders.MediaTypesMenu}
             prompt.AddChoice(MenuItems.GoBack)
             prompt.AddChoice(MenuItems.NewMediaType)
+            prompt.AddChoice(MenuItems.MediaTypeReport)
             Dim command = connection.CreateCommand
             command.CommandText = Commands.MediaTypeList
             Dim table As New Dictionary(Of String, Integer)
@@ -23,6 +24,8 @@ Friend Module MediaTypes
                     NewMediaType.Run(connection)
                 Case MenuItems.GoBack
                     Exit Do
+                Case MenuItems.MediaTypeReport
+                    MediaTypeReport.Run(connection)
                 Case Else
                     MediaType.Run(connection, table(answer))
             End Select
