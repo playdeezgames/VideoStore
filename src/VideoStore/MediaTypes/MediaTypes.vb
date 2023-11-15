@@ -1,13 +1,13 @@
 ﻿Imports Microsoft.Data.SqlClient
 Friend Module MediaTypes
-    Friend Sub Run(connection As SqlConnection)
+    Friend Sub Run(store As DataStore)
         Do
             AnsiConsole.Clear()
             Dim prompt As New SelectionPrompt(Of String) With {.Title = MenuHeaders.MediaTypesMenu}
             prompt.AddChoice(MenuItems.GoBack)
             prompt.AddChoice(MenuItems.NewMediaType)
             prompt.AddChoice(MenuItems.MediaTypeReport)
-            Dim command = connection.CreateCommand
+            Dim command = store.Connection.CreateCommand
             command.CommandText = Commands.MediaTypeList
             Dim table As New Dictionary(Of String, Integer)
             Using reader = command.ExecuteReader
@@ -21,13 +21,13 @@ Friend Module MediaTypes
             Dim answer = AnsiConsole.Prompt(prompt)
             Select Case answer
                 Case MenuItems.NewMediaType
-                    NewMediaType.Run(connection)
+                    NewMediaType.Run(store)
                 Case MenuItems.GoBack
                     Exit Do
                 Case MenuItems.MediaTypeReport
-                    MediaTypeReport.Run(connection)
+                    MediaTypeReport.Run(store)
                 Case Else
-                    MediaType.Run(connection, table(answer))
+                    MediaType.Run(store, table(answer))
             End Select
         Loop
     End Sub

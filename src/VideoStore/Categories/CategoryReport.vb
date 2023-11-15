@@ -1,7 +1,7 @@
 ﻿Imports Microsoft.Data.SqlClient
 Friend Module CategoryReport
-    Friend Sub Run(connection As SqlConnection)
-        Dim command = connection.CreateCommand
+    Friend Sub Run(store As DataStore)
+        Dim command = store.Connection.CreateCommand
         command.CommandText = Commands.CategoryReport
         Utility.ExportHtml(
             "Category Report",

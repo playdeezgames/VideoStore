@@ -1,16 +1,16 @@
 ﻿Imports Microsoft.Data.SqlClient
 
 Friend Module NewMedia
-    Friend Sub Run(connection As SqlConnection)
+    Friend Sub Run(store As DataStore)
         Do
-            Dim mediaTypeId As Integer = PickMediaType(connection)
-            Dim categoryId As Integer = PickCategory(connection)
-            Dim collectionId As Integer? = PickCollection(connection)
+            Dim mediaTypeId As Integer = PickMediaType(store)
+            Dim categoryId As Integer = PickCategory(store)
+            Dim collectionId As Integer? = PickCollection(store)
             Dim title = AnsiConsole.Ask(Prompts.NewMediaTitle, String.Empty)
             If String.IsNullOrWhiteSpace(title) Then
                 Exit Do
             End If
-            Dim command = connection.CreateCommand
+            Dim command = store.Connection.CreateCommand
             command.CommandText = If(collectionId.HasValue, Commands.MediaInsertWithCollection, Commands.MediaInsert)
             command.Parameters.AddWithValue(Parameters.MediaTitle, title)
             command.Parameters.AddWithValue(Parameters.MediaTypeId, mediaTypeId)
@@ -22,8 +22,8 @@ Friend Module NewMedia
         Loop While AnsiConsole.Confirm(Prompts.AddAnother)
     End Sub
 
-    Private Function PickCollection(connection As SqlConnection) As Integer?
-        Dim command = connection.CreateCommand
+    Private Function PickCollection(store As DataStore) As Integer?
+        Dim command = store.Connection.CreateCommand
         command.CommandText = Commands.CollectionList
         command.Parameters.AddWithValue(Parameters.NameFilter, Constants.WildCard)
         Dim table As New Dictionary(Of String, Integer)
@@ -42,8 +42,8 @@ Friend Module NewMedia
         Return table(answer)
     End Function
 
-    Private Function PickCategory(connection As SqlConnection) As Integer
-        Dim command = connection.CreateCommand
+    Private Function PickCategory(store As DataStore) As Integer
+        Dim command = store.Connection.CreateCommand
         command.CommandText = Commands.CategoryList
         Dim table As New Dictionary(Of String, Integer)
         Dim prompt As New SelectionPrompt(Of String) With {.Title = MenuHeaders.PickCategory}
@@ -56,8 +56,8 @@ Friend Module NewMedia
         Return table(AnsiConsole.Prompt(prompt))
     End Function
 
-    Private Function PickMediaType(connection As SqlConnection) As Integer
-        Dim command = connection.CreateCommand
+    Private Function PickMediaType(store As DataStore) As Integer
+        Dim command = store.Connection.CreateCommand
         command.CommandText = Commands.MediaTypeList
         Dim table As New Dictionary(Of String, Integer)
         Dim prompt As New SelectionPrompt(Of String) With {.Title = MenuHeaders.PickMediaType}

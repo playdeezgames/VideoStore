@@ -1,8 +1,8 @@
 ﻿Imports Microsoft.Data.SqlClient
 
 Friend Module MediaTypeReport
-    Friend Sub Run(connection As SqlConnection)
-        Dim command = connection.CreateCommand
+    Friend Sub Run(store As DataStore)
+        Dim command = store.Connection.CreateCommand
         command.CommandText = Commands.MediaTypeReport
         Utility.ExportHtml(
             "Media Type Report",

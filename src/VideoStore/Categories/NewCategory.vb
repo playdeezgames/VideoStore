@@ -1,7 +1,7 @@
 ﻿Imports Microsoft.Data.SqlClient
 
 Friend Module NewCategory
-    Friend Sub Run(connection As SqlConnection)
+    Friend Sub Run(store As DataStore)
         AnsiConsole.Clear()
         Dim name = AnsiConsole.Ask(NewCategoryName, String.Empty)
         If String.IsNullOrWhiteSpace(name) Then
@@ -11,7 +11,7 @@ Friend Module NewCategory
         If String.IsNullOrWhiteSpace(abbreviation) Then
             Return
         End If
-        Dim command = connection.CreateCommand
+        Dim command = store.Connection.CreateCommand
         command.CommandText = CategoryCheckAbbreviation
         command.Parameters.AddWithValue(Parameters.CategoryAbbr, abbreviation)
         Dim result = CInt(command.ExecuteScalar)
@@ -20,7 +20,7 @@ Friend Module NewCategory
             OkPrompt()
             Return
         End If
-        command = connection.CreateCommand
+        command = store.Connection.CreateCommand
         command.CommandText = CategoryInsert
         command.Parameters.AddWithValue(Parameters.CategoryName, name)
         command.Parameters.AddWithValue(Parameters.CategoryAbbr, abbreviation)

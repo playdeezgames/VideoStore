@@ -1,7 +1,7 @@
 ﻿Imports Microsoft.Data.SqlClient
 
 Friend Module Categories
-    Friend Sub Run(connection As SqlConnection)
+    Friend Sub Run(store As DataStore)
         Do
             Dim categoryList As New List(Of (Id As Integer, Abbr As String, Name As String))
             Dim prompt As New SelectionPrompt(Of String) With {.Title = CategoriesMenu}
@@ -9,7 +9,7 @@ Friend Module Categories
             prompt.AddChoice(MenuItems.NewCategory)
             prompt.AddChoice(MenuItems.CategoryReport)
             Dim table As New Dictionary(Of String, Integer)
-            Using command = connection.CreateCommand
+            Using command = store.Connection.CreateCommand
                 command.CommandText = Commands.CategoryList
                 Using reader = command.ExecuteReader
                     While reader.Read
@@ -27,11 +27,11 @@ Friend Module Categories
                 Case GoBack
                     Exit Do
                 Case MenuItems.NewCategory
-                    NewCategory.Run(connection)
+                    NewCategory.Run(store)
                 Case MenuItems.CategoryReport
-                    CategoryReport.Run(connection)
+                    CategoryReport.Run(store)
                 Case Else
-                    Category.Run(connection, table(answer))
+                    Category.Run(store, table(answer))
             End Select
         Loop
     End Sub

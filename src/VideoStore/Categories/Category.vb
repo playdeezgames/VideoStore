@@ -1,10 +1,10 @@
 ﻿Imports Microsoft.Data.SqlClient
 
 Friend Module Category
-    Friend Sub Run(connection As SqlConnection, categoryId As Integer)
+    Friend Sub Run(store As DataStore, categoryId As Integer)
         Do
             Dim category As (Id As Integer, Abbr As String, Name As String, MediaCount As Integer)
-            Dim command = connection.CreateCommand()
+            Dim command = store.Connection.CreateCommand()
             command.CommandText = CategoryDetails
             command.Parameters.AddWithValue(Parameters.CategoryId, categoryId)
             Using reader = command.ExecuteReader()
@@ -27,31 +27,31 @@ Friend Module Category
                 Case GoBack
                     Exit Do
                 Case MenuItems.DeleteCategory
-                    DeleteCategory.Run(connection, categoryId)
+                    DeleteCategory.Run(store, categoryId)
                     Exit Do
                 Case ChangeName
-                    ChangeCategoryName(connection, categoryId, category.Name)
+                    ChangeCategoryName(store, categoryId, category.Name)
                 Case ChangeAbbreviation
-                    ChangeCategoryAbbreviation(connection, categoryId, category.Abbr)
+                    ChangeCategoryAbbreviation(store, categoryId, category.Abbr)
             End Select
         Loop
     End Sub
 
 
-    Private Sub ChangeCategoryAbbreviation(connection As SqlConnection, categoryId As Integer, abbr As String)
+    Private Sub ChangeCategoryAbbreviation(store As DataStore, categoryId As Integer, abbr As String)
         Dim newAbbreviation = AnsiConsole.Ask("[olive]New Abbreviation?[/]", abbr)
         If newAbbreviation <> abbr Then
-            Dim command = connection.CreateCommand
+            Dim command = store.Connection.CreateCommand
             command.CommandText = CategoryUpdateAbbreviation
             command.Parameters.AddWithValue(Parameters.CategoryAbbr, newAbbreviation)
             command.Parameters.AddWithValue(Parameters.CategoryId, categoryId)
             command.ExecuteNonQuery()
         End If
     End Sub
-    Private Sub ChangeCategoryName(connection As SqlConnection, categoryId As Integer, name As String)
+    Private Sub ChangeCategoryName(store As DataStore, categoryId As Integer, name As String)
         Dim newName = AnsiConsole.Ask("[olive]New Name?[/]", name)
         If newName <> name Then
-            Dim command = connection.CreateCommand
+            Dim command = store.Connection.CreateCommand
             command.CommandText = CategoryUpdateName
             command.Parameters.AddWithValue(Parameters.CategoryName, newName)
             command.Parameters.AddWithValue(Parameters.CategoryId, categoryId)

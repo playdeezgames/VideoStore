@@ -1,7 +1,7 @@
 ﻿Imports Microsoft.Data.SqlClient
 
 Friend Module NewMediaType
-    Friend Sub Run(connection As SqlConnection)
+    Friend Sub Run(store As DataStore)
         Dim name = AnsiConsole.Ask(Prompts.NewMediaTypeName, String.Empty)
         If String.IsNullOrEmpty(name) Then
             Return
@@ -10,7 +10,7 @@ Friend Module NewMediaType
         If String.IsNullOrEmpty(abbreviation) Then
             Return
         End If
-        Dim command = connection.CreateCommand
+        Dim command = store.Connection.CreateCommand
         command.CommandText = Commands.MediaTypeCheckAbbreviation
         command.Parameters.AddWithValue(Parameters.MediaTypeAbbr, abbreviation)
         Dim result = CInt(command.ExecuteScalar)
@@ -18,7 +18,7 @@ Friend Module NewMediaType
             AnsiConsole.MarkupLine(Errors.DuplicateAbbreviation)
             Return
         End If
-        command = connection.CreateCommand
+        command = store.Connection.CreateCommand
         command.CommandText = Commands.MediaTypeInsert
         command.Parameters.AddWithValue(Parameters.MediaTypeAbbr, abbreviation)
         command.Parameters.AddWithValue(Parameters.MediaTypeName, name)

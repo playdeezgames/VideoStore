@@ -1,9 +1,9 @@
 ﻿Imports Microsoft.Data.SqlClient
 
 Friend Module CollectionItem
-    Friend Sub Run(connection As SqlConnection, collectionId As Integer)
+    Friend Sub Run(store As DataStore, collectionId As Integer)
         Do
-            Dim command = connection.CreateCommand
+            Dim command = store.Connection.CreateCommand
             command.CommandText = Commands.CollectionDetails
             command.Parameters.AddWithValue(Parameters.CollectionId, collectionId)
             Dim prompt As New SelectionPrompt(Of String) With {.Title = String.Empty}
@@ -26,19 +26,19 @@ Friend Module CollectionItem
                 Case MenuItems.GoBack
                     Exit Do
                 Case MenuItems.DeleteCollection
-                    DeleteCollection.Run(connection, collectionId)
+                    DeleteCollection.Run(store, collectionId)
                     Exit Do
                 Case MenuItems.ChangeName
-                    RunChangeName(connection, collectionId, collectionName)
+                    RunChangeName(store, collectionId, collectionName)
             End Select
         Loop
     End Sub
-    Private Sub RunChangeName(connection As SqlConnection, collectionId As Integer, collectionName As String)
+    Private Sub RunChangeName(store As DataStore, collectionId As Integer, collectionName As String)
         Dim newCollectionName = AnsiConsole.Ask(Prompts.NewCollectionName, collectionName)
         If newCollectionName = collectionName Then
             Return
         End If
-        Dim command = connection.CreateCommand
+        Dim command = store.Connection.CreateCommand
         command.CommandText = Commands.CollectionUpdateName
         command.Parameters.AddWithValue(Parameters.CollectionId, collectionId)
         command.Parameters.AddWithValue(Parameters.CollectionName, newCollectionName)

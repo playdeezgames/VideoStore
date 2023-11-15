@@ -1,9 +1,9 @@
 ﻿Imports Microsoft.Data.SqlClient
 
 Friend Module MediaType
-    Friend Sub Run(connection As SqlConnection, mediaTypeId As Integer)
+    Friend Sub Run(store As DataStore, mediaTypeId As Integer)
         Do
-            Dim command = connection.CreateCommand
+            Dim command = store.Connection.CreateCommand
             command.CommandText = Commands.MediaTypeDetails
             command.Parameters.AddWithValue(Parameters.MediaTypeId, mediaTypeId)
             Dim mediaTypeName As String
@@ -31,25 +31,25 @@ Friend Module MediaType
                 Case MenuItems.GoBack
                     Exit Do
                 Case MenuItems.DeleteMediaType
-                    DeleteMediaType.Run(connection, mediaTypeId)
+                    DeleteMediaType.Run(store, mediaTypeId)
                     Exit Do
                 Case MenuItems.ChangeAbbreviation
-                    ChangeMediaTypeAbbreviation(connection, mediaTypeId, mediaTypeAbbr)
+                    ChangeMediaTypeAbbreviation(store, mediaTypeId, mediaTypeAbbr)
                 Case MenuItems.ChangeName
-                    ChangeMediaTypeName(connection, mediaTypeId, mediaTypeName)
+                    ChangeMediaTypeName(store, mediaTypeId, mediaTypeName)
             End Select
         Loop
     End Sub
 
     Private Sub ChangeMediaTypeName(
-                                   connection As SqlConnection,
+                                   store As DataStore,
                                    mediaTypeId As Integer,
                                    mediaTypeName As String)
         Dim newMediaTypeName = AnsiConsole.Ask(Prompts.NewMediaTypeName, mediaTypeName)
         If newMediaTypeName = mediaTypeName Then
             Return
         End If
-        Dim command = connection.CreateCommand
+        Dim command = store.Connection.CreateCommand
         command.CommandText = Commands.MediaTypeUpdateName
         command.Parameters.AddWithValue(Parameters.MediaTypeName, newMediaTypeName)
         command.Parameters.AddWithValue(Parameters.MediaTypeId, mediaTypeId)
@@ -57,14 +57,14 @@ Friend Module MediaType
     End Sub
 
     Private Sub ChangeMediaTypeAbbreviation(
-                                           connection As SqlConnection,
+                                           store As DataStore,
                                            mediaTypeId As Integer,
                                            mediaTypeAbbr As String)
         Dim newMediaTypeAbbr = AnsiConsole.Ask(Prompts.NewMediaTypeName, mediaTypeAbbr)
         If newMediaTypeAbbr = mediaTypeAbbr Then
             Return
         End If
-        Dim command = connection.CreateCommand
+        Dim command = store.Connection.CreateCommand
         command.CommandText = Commands.MediaTypeCheckAbbreviation
         command.Parameters.AddWithValue(Parameters.MediaTypeAbbr, newMediaTypeAbbr)
         Dim result = CInt(command.ExecuteScalar)
@@ -73,7 +73,7 @@ Friend Module MediaType
             OkPrompt()
             Return
         End If
-        command = connection.CreateCommand
+        command = store.Connection.CreateCommand
         command.CommandText = Commands.MediaTypeUpdateAbbr
         command.Parameters.AddWithValue(Parameters.MediaTypeAbbr, newMediaTypeAbbr)
         command.Parameters.AddWithValue(Parameters.MediaTypeId, mediaTypeId)

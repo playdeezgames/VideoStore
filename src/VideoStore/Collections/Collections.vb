@@ -2,7 +2,7 @@
 Imports Microsoft.Data.SqlClient
 
 Friend Module Collections
-    Friend Sub Run(connection As SqlConnection)
+    Friend Sub Run(store As DataStore)
         Dim nameFilter As String = Constants.WildCard
         Do
             AnsiConsole.Clear()
@@ -13,7 +13,7 @@ Friend Module Collections
             prompt.AddChoice(MenuItems.ChangeNameFilter)
             prompt.AddChoice(MenuItems.CollectionReport)
             Dim table As New Dictionary(Of String, Integer)
-            Dim command = connection.CreateCommand
+            Dim command = store.Connection.CreateCommand
             command.CommandText = Commands.CollectionList
             command.Parameters.AddWithValue(Parameters.NameFilter, nameFilter)
             Using reader = command.ExecuteReader()
@@ -28,13 +28,13 @@ Friend Module Collections
                 Case MenuItems.GoBack
                     Exit Do
                 Case MenuItems.NewCollection
-                    NewCollection.Run(connection)
+                    NewCollection.Run(store)
                 Case MenuItems.CollectionReport
-                    CollectionReport.Run(connection)
+                    CollectionReport.Run(store)
                 Case MenuItems.ChangeNameFilter
                     nameFilter = AnsiConsole.Ask(Prompts.NewNameFilter, Constants.WildCard)
                 Case Else
-                    CollectionItem.Run(connection, table(answer))
+                    CollectionItem.Run(store, table(answer))
             End Select
         Loop
     End Sub

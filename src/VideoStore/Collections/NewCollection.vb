@@ -1,12 +1,12 @@
 ﻿Imports Microsoft.Data.SqlClient
 
 Friend Module NewCollection
-    Friend Sub Run(connection As SqlConnection)
+    Friend Sub Run(store As DataStore)
         Dim collectionName = AnsiConsole.Ask(Prompts.NewCollectionName, String.Empty)
         If String.IsNullOrWhiteSpace(collectionName) Then
             Return
         End If
-        Dim command = connection.CreateCommand
+        Dim command = store.Connection.CreateCommand
         command.CommandText = Commands.CollectionInsert
         command.Parameters.AddWithValue(Parameters.CollectionName, collectionName)
         command.ExecuteNonQuery()

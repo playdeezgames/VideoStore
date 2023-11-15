@@ -1,7 +1,5 @@
-﻿Imports Microsoft.Data.SqlClient
-
-Friend Module Media
-    Friend Sub Run(connection As SqlConnection)
+﻿Friend Module Media
+    Friend Sub Run(store As DataStore)
         Do
             AnsiConsole.Clear()
             Dim prompt As New SelectionPrompt(Of String) With {.Title = MenuHeaders.MediaMenu}
@@ -11,7 +9,7 @@ Friend Module Media
                 Case MenuItems.GoBack
                     Exit Do
                 Case MenuItems.NewMedia
-                    NewMedia.Run(connection)
+                    NewMedia.Run(store)
             End Select
         Loop
     End Sub

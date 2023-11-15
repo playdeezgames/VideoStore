@@ -1,7 +1,7 @@
 ﻿Imports Microsoft.Data.SqlClient
 
 Friend Module MainMenu
-    Friend Sub Run(connection As SqlConnection)
+    Friend Sub Run(store As DataStore)
         Do
             Dim prompt As New SelectionPrompt(Of String) With {.Title = MenuHeaders.MainMenu}
             prompt.AddChoices(
@@ -12,13 +12,13 @@ Friend Module MainMenu
                 MenuItems.Quit)
             Select Case AnsiConsole.Prompt(prompt)
                 Case MenuItems.Media
-                    Media.Run(connection)
+                    Media.Run(store)
                 Case MenuItems.Categories
-                    Categories.Run(connection)
+                    Categories.Run(store)
                 Case MenuItems.Collections
-                    Collections.Run(connection)
+                    Collections.Run(store)
                 Case MenuItems.MediaTypes
-                    MediaTypes.Run(connection)
+                    MediaTypes.Run(store)
                 Case MenuItems.Quit
                     Exit Do
             End Select
