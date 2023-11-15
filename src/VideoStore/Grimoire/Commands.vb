@@ -172,4 +172,17 @@ GROUP BY
 HAVING
     mt.{Fields.MediaTypeId}={Parameters.MediaTypeId};"
 
+    Friend ReadOnly CollectionReport As String = $"
+SELECT
+    c.{Fields.CollectionName},
+    COUNT(m.{Fields.MediaId}) AS {Fields.MediaCount}
+FROM
+    {Tables.Collections} c
+    LEFT JOIN {Tables.Media} m ON m.{Fields.CollectionId}=c.{Fields.CollectionId}
+GROUP BY
+    c.{Fields.CollectionId},
+    c.{Fields.CollectionName}
+ORDER BY
+    c.{Fields.CollectionName};"
+
 End Module

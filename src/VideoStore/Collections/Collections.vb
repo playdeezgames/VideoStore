@@ -24,6 +24,8 @@ Friend Module Collections
                     Exit Do
                 Case MenuItems.NewCollection
                     NewCollection.Run(connection)
+                Case MenuItems.CollectionReport
+                    CollectionReport.Run(connection)
                 Case Else
                     CollectionItem.Run(connection, table(answer))
             End Select

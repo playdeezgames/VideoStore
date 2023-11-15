@@ -3,7 +3,7 @@
     Friend Const CategoryReport = "Category Report"
     Friend Const ChangeAbbreviation As String = "Change Abbreviation..."
     Friend Const ChangeName As String = "Change Name..."
-    Friend Const CollectionReport = "CollectionReport"
+    Friend Const CollectionReport = "Collection Report"
     Friend Const Collections = "Collections..."
     Friend Const DeleteCategory As String = "Delete Category"
     Friend Const DeleteCollection = "Delete Collection"
