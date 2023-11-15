@@ -206,4 +206,20 @@ GROUP BY
 ORDER BY
     mt.{Fields.MediaTypeName};"
 
+    Friend ReadOnly MediaTypeUpdateName As String = $"
+UPDATE
+    {Tables.MediaTypes}
+SET
+    {Fields.MediaTypeName}={Parameters.MediaTypeName}
+WHERE
+    {Fields.MediaTypeId}={Parameters.MediaTypeId};"
+
+    Friend ReadOnly MediaTypeUpdateAbbr As String = $"
+UPDATE
+    {Tables.MediaTypes}
+SET
+    {Fields.MediaTypeAbbr}={Parameters.MediaTypeAbbr}
+WHERE
+    {Fields.MediaTypeId}={Parameters.MediaTypeId};"
+
 End Module
