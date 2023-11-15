@@ -7,6 +7,7 @@
     Friend Const Collections = "Collections..."
     Friend Const DeleteCategory As String = "Delete Category"
     Friend Const DeleteCollection = "Delete Collection"
+    Friend Const DeleteMediaType = "Delete Media Type"
     Friend Const GoBack As String = "Go Back"
     Friend Const MediaTypes = "Media Types..."
     Friend Const NewCategory As String = "New Category..."

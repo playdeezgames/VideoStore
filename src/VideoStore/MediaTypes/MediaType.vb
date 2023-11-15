@@ -22,8 +22,14 @@ Friend Module MediaType
             AnsiConsole.MarkupLine($"Media Count: {mediaCount}")
             Dim prompt As New SelectionPrompt(Of String) With {.Title = String.Empty}
             prompt.AddChoice(MenuItems.GoBack)
+            If mediaCount = 0 Then
+                prompt.AddChoice(MenuItems.DeleteMediaType)
+            End If
             Select Case AnsiConsole.Prompt(prompt)
                 Case MenuItems.GoBack
+                    Exit Do
+                Case MenuItems.DeleteMediaType
+                    DeleteMediaType.Run(connection, mediaTypeId)
                     Exit Do
             End Select
         Loop

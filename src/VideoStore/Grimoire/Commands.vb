@@ -185,4 +185,9 @@ GROUP BY
 ORDER BY
     c.{Fields.CollectionName};"
 
+    Friend ReadOnly MediaTypeDelete As String = $"
+DELETE FROM 
+    {Tables.MediaTypes}
+WHERE
+    {Fields.MediaTypeId}={Parameters.MediaTypeId};"
 End Module
