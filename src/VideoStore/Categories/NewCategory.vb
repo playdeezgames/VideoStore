@@ -11,19 +11,11 @@ Friend Module NewCategory
         If String.IsNullOrWhiteSpace(abbreviation) Then
             Return
         End If
-        Dim command = store.Connection.CreateCommand
-        command.CommandText = CategoryCheckAbbreviation
-        command.Parameters.AddWithValue(Parameters.CategoryAbbr, abbreviation)
-        Dim result = CInt(command.ExecuteScalar)
-        If result > 0 Then
+        If store.CheckCategoryAbbreviation(abbreviation) Then
             AnsiConsole.MarkupLine(DuplicateAbbreviation)
             OkPrompt()
             Return
         End If
-        command = store.Connection.CreateCommand
-        command.CommandText = CategoryInsert
-        command.Parameters.AddWithValue(Parameters.CategoryName, name)
-        command.Parameters.AddWithValue(Parameters.CategoryAbbr, abbreviation)
-        command.ExecuteNonQuery()
+        store.CreateCategory(name, abbreviation)
     End Sub
 End Module

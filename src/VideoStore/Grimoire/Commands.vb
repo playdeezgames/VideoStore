@@ -53,6 +53,7 @@ ORDER BY
 
     Friend ReadOnly CategoryReport As String = $"
 SELECT 
+    c.{Fields.CategoryId},
     c.{Fields.CategoryName}, 
     c.{Fields.CategoryAbbr}, 
     c.{Fields.MediaCount} 

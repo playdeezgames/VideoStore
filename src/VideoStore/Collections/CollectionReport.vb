@@ -4,7 +4,7 @@ Friend Module CollectionReport
     Friend Sub Run(store As DataStore)
         Dim command = store.Connection.CreateCommand
         command.CommandText = Commands.CollectionReport
-        Utility.ExportHtml(
+        Utility.LegacyExportHtml(
             "Collection Report",
             "CollectionReport",
             New String() {

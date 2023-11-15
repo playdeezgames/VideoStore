@@ -4,7 +4,7 @@ Friend Module MediaTypeReport
     Friend Sub Run(store As DataStore)
         Dim command = store.Connection.CreateCommand
         command.CommandText = Commands.MediaTypeReport
-        Utility.ExportHtml(
+        Utility.LegacyExportHtml(
             "Media Type Report",
             "MediaTypeReport",
             New String() {

@@ -34,21 +34,13 @@ Friend Module Category
     Private Sub ChangeCategoryAbbreviation(store As DataStore, categoryId As Integer, abbr As String)
         Dim newAbbreviation = AnsiConsole.Ask("[olive]New Abbreviation?[/]", abbr)
         If newAbbreviation <> abbr Then
-            Dim command = store.Connection.CreateCommand
-            command.CommandText = CategoryUpdateAbbreviation
-            command.Parameters.AddWithValue(Parameters.CategoryAbbr, newAbbreviation)
-            command.Parameters.AddWithValue(Parameters.CategoryId, categoryId)
-            command.ExecuteNonQuery()
+            store.ChangeCategoryAbbreviation(categoryId, newAbbreviation)
         End If
     End Sub
     Private Sub ChangeCategoryName(store As DataStore, categoryId As Integer, name As String)
         Dim newName = AnsiConsole.Ask("[olive]New Name?[/]", name)
         If newName <> name Then
-            Dim command = store.Connection.CreateCommand
-            command.CommandText = CategoryUpdateName
-            command.Parameters.AddWithValue(Parameters.CategoryName, newName)
-            command.Parameters.AddWithValue(Parameters.CategoryId, categoryId)
-            command.ExecuteNonQuery()
+            store.ChangeCategoryName(categoryId, newName)
         End If
     End Sub
 End Module

@@ -1,8 +1,5 @@
-﻿Imports Microsoft.Data.SqlClient
-Friend Module CategoryReport
+﻿Friend Module CategoryReport
     Friend Sub Run(store As DataStore)
-        Dim command = store.Connection.CreateCommand
-        command.CommandText = Commands.CategoryReport
         Utility.ExportHtml(
             "Category Report",
             "CategoryReport",
@@ -11,11 +8,11 @@ Friend Module CategoryReport
                 "Abbreviation",
                 "Media Count"
             },
-            command,
-            New Func(Of SqlDataReader, Object)() {
-                Function(reader) reader.GetString(0),
-                Function(reader) reader.GetString(1),
-                Function(reader) reader.GetInt32(2)
+            store.CategoryReport,
+            New Func(Of (Id As Integer, Abbr As String, Name As String, MediaCount As Integer), Object)() {
+                Function(item) item.Name,
+                Function(item) item.Abbr,
+                Function(item) item.MediaCount
             })
     End Sub
 End Module
