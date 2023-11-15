@@ -83,6 +83,8 @@ SELECT
     c.{Fields.CollectionName} 
 FROM 
     {Tables.Collections} c 
+WHERE
+    {Fields.CollectionName} LIKE {Parameters.NameFilter}
 ORDER BY 
     {Fields.CollectionName};"
 

@@ -4,4 +4,5 @@
     Friend Const NewCollectionName = "[olive]New Collection Name?[/]"
     Friend Const NewMediaTypeName = "[olive]New Media Type Name?[/]"
     Friend Const NewMediaTypeAbbreviation = "[olive]New Media Type Abbreviation?[/]"
+    Friend Const NewNameFilter = "[olive]New Name Filter?[/]"
 End Module

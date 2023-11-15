@@ -16,4 +16,5 @@
     Friend Const NewMediaType = "New Media Type..."
     Friend Const Ok As String = "Ok"
     Friend Const Quit As String = "Quit"
+    Friend Const ChangeNameFilter = "Change Name Filter..."
 End Module
