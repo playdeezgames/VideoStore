@@ -5,11 +5,14 @@ Friend Module MainMenu
         Do
             Dim prompt As New SelectionPrompt(Of String) With {.Title = MenuHeaders.MainMenu}
             prompt.AddChoices(
-                MenuItems.Categories,
+                MenuItems.Media,
                 MenuItems.Collections,
+                MenuItems.Categories,
                 MenuItems.MediaTypes,
                 MenuItems.Quit)
             Select Case AnsiConsole.Prompt(prompt)
+                Case MenuItems.Media
+                    Media.Run(connection)
                 Case MenuItems.Categories
                     Categories.Run(connection)
                 Case MenuItems.Collections

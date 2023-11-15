@@ -8,4 +8,5 @@
     Friend Const MediaTypeId As String = "@MediaTypeId"
     Friend Const MediaTypeName As String = "@MediaTypeName"
     Friend Const NameFilter As String = "@NameFilter"
+    Friend Const MediaTitle As String = "@MediaTitle"
 End Module

@@ -9,6 +9,7 @@
     Friend Const DeleteCollection = "Delete Collection"
     Friend Const DeleteMediaType = "Delete Media Type"
     Friend Const GoBack As String = "Go Back"
+    Friend Const Media As String = "Media..."
     Friend Const MediaTypeReport = "Media Type Report"
     Friend Const MediaTypes = "Media Types..."
     Friend Const NewCategory As String = "New Category..."
@@ -17,4 +18,6 @@
     Friend Const Ok As String = "Ok"
     Friend Const Quit As String = "Quit"
     Friend Const ChangeNameFilter = "Change Name Filter..."
+    Friend Const NewMedia = "New Media..."
+    Friend Const NoCollection = "(no collection)"
 End Module

@@ -9,4 +9,5 @@
     Friend Const MediaTypeAbbr = "MediaTypeAbbr"
     Friend Const MediaTypeName = "MediaTypeName"
     Friend Const MediaTypeId = "MediaTypeId"
+    Friend Const MediaTitle = "MediaTitle"
 End Module

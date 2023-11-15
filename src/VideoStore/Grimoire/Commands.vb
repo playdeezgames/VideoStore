@@ -224,4 +224,36 @@ SET
 WHERE
     {Fields.MediaTypeId}={Parameters.MediaTypeId};"
 
+    Friend ReadOnly MediaInsertWithCollection As String = $"
+INSERT INTO
+    {Tables.Media}
+    (
+        {Fields.MediaTitle},
+        {Fields.CategoryId},
+        {Fields.MediaTypeId},
+        {Fields.CollectionId}
+    )
+    VALUES
+    (
+        {Parameters.MediaTitle},
+        {Parameters.CategoryId},
+        {Parameters.MediaTypeId},
+        {Parameters.CollectionId}
+    );"
+
+    Friend ReadOnly MediaInsert As String = $"
+INSERT INTO
+    {Tables.Media}
+    (
+        {Fields.MediaTitle},
+        {Fields.CategoryId},
+        {Fields.MediaTypeId}
+    )
+    VALUES
+    (
+        {Parameters.MediaTitle},
+        {Parameters.CategoryId},
+        {Parameters.MediaTypeId}
+    );"
+
 End Module
