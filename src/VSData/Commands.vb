@@ -1,4 +1,4 @@
-﻿Friend Module Commands
+﻿Public Module Commands
     Friend ReadOnly CategoryCheckAbbreviation As String = $"
 SELECT 
     COUNT(1) 
@@ -41,7 +41,7 @@ INSERT INTO
         {Parameters.CategoryAbbr}
     );"
 
-    Friend ReadOnly CategoryList As String = $"
+    Public ReadOnly CategoryList As String = $"
 SELECT 
     {Fields.CategoryId}, 
     {Fields.CategoryAbbr}, 
@@ -78,7 +78,7 @@ SET
 WHERE 
     {Fields.CategoryId}={Parameters.CategoryId};"
 
-    Friend ReadOnly CollectionList As String = $"
+    Public ReadOnly CollectionList As String = $"
 SELECT 
     c.{Fields.CollectionId}, 
     c.{Fields.CollectionName} 
@@ -89,7 +89,7 @@ WHERE
 ORDER BY 
     {Fields.CollectionName};"
 
-    Friend ReadOnly CollectionInsert As String = $"
+    Public ReadOnly CollectionInsert As String = $"
 INSERT INTO 
     {Tables.Collections}
     (
@@ -100,7 +100,7 @@ INSERT INTO
         {Parameters.CollectionName}
     );"
 
-    Friend ReadOnly CollectionDetails As String = $"
+    Public ReadOnly CollectionDetails As String = $"
 SELECT 
     c.{Fields.CollectionId}, 
     c.{Fields.CollectionName}, 
@@ -114,13 +114,13 @@ GROUP BY
 HAVING 
     c.{Fields.CollectionId}={Parameters.CollectionId};"
 
-    Friend ReadOnly CollectionDelete As String = $"
+    Public ReadOnly CollectionDelete As String = $"
 DELETE FROM 
     {Tables.Collections} 
 WHERE 
     {Fields.CollectionId}={Parameters.CollectionId}"
 
-    Friend ReadOnly CollectionUpdateName As String = $"
+    Public ReadOnly CollectionUpdateName As String = $"
 UPDATE 
     {Tables.Collections} 
 SET 
@@ -128,7 +128,7 @@ SET
 WHERE 
     {Fields.CollectionId}={Parameters.CollectionId};"
 
-    Friend ReadOnly MediaTypeCheckAbbreviation As String = $"
+    Public ReadOnly MediaTypeCheckAbbreviation As String = $"
 SELECT
     COUNT(1)
 FROM
@@ -136,7 +136,7 @@ FROM
 WHERE
     {Fields.MediaTypeAbbr}={Parameters.MediaTypeAbbr};"
 
-    Friend ReadOnly MediaTypeInsert As String = $"
+    Public ReadOnly MediaTypeInsert As String = $"
 INSERT INTO
     {Tables.MediaTypes}
     (
@@ -149,7 +149,7 @@ INSERT INTO
         {Parameters.MediaTypeName}
     );"
 
-    Friend ReadOnly MediaTypeList As String = $"
+    Public ReadOnly MediaTypeList As String = $"
 SELECT
     {Fields.MediaTypeId},
     {Fields.MediaTypeName},
@@ -159,7 +159,7 @@ FROM
 ORDER BY
     {Fields.MediaTypeName};"
 
-    Friend ReadOnly MediaTypeDetails As String = $"
+    Public ReadOnly MediaTypeDetails As String = $"
 SELECT
     mt.{Fields.MediaTypeId},
     mt.{Fields.MediaTypeAbbr},
@@ -175,7 +175,7 @@ GROUP BY
 HAVING
     mt.{Fields.MediaTypeId}={Parameters.MediaTypeId};"
 
-    Friend ReadOnly CollectionReport As String = $"
+    Public ReadOnly CollectionReport As String = $"
 SELECT
     c.{Fields.CollectionName},
     COUNT(m.{Fields.MediaId}) AS {Fields.MediaCount}
@@ -188,13 +188,13 @@ GROUP BY
 ORDER BY
     c.{Fields.CollectionName};"
 
-    Friend ReadOnly MediaTypeDelete As String = $"
+    Public ReadOnly MediaTypeDelete As String = $"
 DELETE FROM 
     {Tables.MediaTypes}
 WHERE
     {Fields.MediaTypeId}={Parameters.MediaTypeId};"
 
-    Friend ReadOnly MediaTypeReport As String = $"
+    Public ReadOnly MediaTypeReport As String = $"
 SELECT
     mt.{Fields.MediaTypeName},
     mt.{Fields.MediaTypeAbbr},
@@ -209,7 +209,7 @@ GROUP BY
 ORDER BY
     mt.{Fields.MediaTypeName};"
 
-    Friend ReadOnly MediaTypeUpdateName As String = $"
+    Public ReadOnly MediaTypeUpdateName As String = $"
 UPDATE
     {Tables.MediaTypes}
 SET
@@ -217,7 +217,7 @@ SET
 WHERE
     {Fields.MediaTypeId}={Parameters.MediaTypeId};"
 
-    Friend ReadOnly MediaTypeUpdateAbbr As String = $"
+    Public ReadOnly MediaTypeUpdateAbbr As String = $"
 UPDATE
     {Tables.MediaTypes}
 SET
@@ -225,7 +225,7 @@ SET
 WHERE
     {Fields.MediaTypeId}={Parameters.MediaTypeId};"
 
-    Friend ReadOnly MediaInsertWithCollection As String = $"
+    Public ReadOnly MediaInsertWithCollection As String = $"
 INSERT INTO
     {Tables.Media}
     (
@@ -242,7 +242,7 @@ INSERT INTO
         {Parameters.CollectionId}
     );"
 
-    Friend ReadOnly MediaInsert As String = $"
+    Public ReadOnly MediaInsert As String = $"
 INSERT INTO
     {Tables.Media}
     (
@@ -267,5 +267,18 @@ FROM
     {Tables.MediaListItems}
 ORDER BY
     {Fields.MediaTitle} ASC;"
+
+    Friend ReadOnly MediaTypeMediaList As String = $"
+SELECT
+    m.{Fields.MediaId},
+    m.{Fields.MediaTitle},
+    cat.{Fields.CategoryName},
+    col.{Fields.CollectionName}
+FROM
+    {Tables.Media} m
+    JOIN {Tables.Categories} cat ON cat.{Fields.CategoryId}=m.{Fields.CategoryId}
+    LEFT JOIN {Tables.Collections} col ON col.{Fields.CollectionId}=m.{Fields.CollectionId}
+WHERE
+    m.{Fields.MediaTypeId}={Parameters.MediaTypeId};"
 
 End Module

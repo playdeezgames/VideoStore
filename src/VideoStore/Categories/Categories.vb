@@ -1,4 +1,6 @@
-﻿Friend Module Categories
+﻿Imports VSData
+
+Friend Module Categories
     Friend Sub Run(store As DataStore)
         Do
             Dim prompt As New SelectionPrompt(Of String) With {.Title = CategoriesMenu}

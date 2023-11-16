@@ -1,4 +1,6 @@
-﻿Friend Module Media
+﻿Imports VSData
+
+Friend Module Media
     Friend Sub Run(store As DataStore)
         Do
             AnsiConsole.Clear()

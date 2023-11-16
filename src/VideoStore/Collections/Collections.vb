@@ -1,5 +1,4 @@
-﻿Imports System.Windows.Markup
-Imports Microsoft.Data.SqlClient
+﻿Imports VSData
 
 Friend Module Collections
     Friend Sub Run(store As DataStore)

@@ -1,4 +1,5 @@
 ﻿Imports Microsoft.Data.SqlClient
+Imports VSData
 
 Friend Module NewCollection
     Friend Sub Run(store As DataStore)

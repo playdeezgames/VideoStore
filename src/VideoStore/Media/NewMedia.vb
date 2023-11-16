@@ -1,6 +1,7 @@
 ﻿Imports System.Collections.ObjectModel
 Imports System.IO.Pipes
 Imports Microsoft.Data.SqlClient
+Imports VSData
 
 Friend Module NewMedia
     Friend Sub Run(store As DataStore)

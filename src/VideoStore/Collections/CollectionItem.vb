@@ -1,4 +1,5 @@
 ﻿Imports Microsoft.Data.SqlClient
+Imports VSData
 
 Friend Module CollectionItem
     Friend Sub Run(store As DataStore, collectionId As Integer)

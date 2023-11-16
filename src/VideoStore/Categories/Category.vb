@@ -1,4 +1,4 @@
-﻿Imports Microsoft.Data.SqlClient
+﻿Imports VSData
 
 Friend Module Category
     Friend Sub Run(store As DataStore, categoryId As Integer)

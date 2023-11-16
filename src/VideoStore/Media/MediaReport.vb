@@ -1,4 +1,6 @@
-﻿Friend Module MediaReport
+﻿Imports VSData
+
+Friend Module MediaReport
     Friend Sub Run(store As DataStore)
         Utility.ExportHtml(
             "Media Report",

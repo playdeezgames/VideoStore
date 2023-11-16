@@ -1,4 +1,4 @@
-﻿Imports Microsoft.Data.SqlClient
+﻿Imports VSData
 
 Friend Module MediaType
     Friend Sub Run(store As DataStore, mediaTypeId As Integer)

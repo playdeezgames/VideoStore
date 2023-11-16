@@ -1,4 +1,6 @@
-﻿Imports Microsoft.Data.SqlClient
+﻿Imports System.Diagnostics.Eventing
+Imports Microsoft.Data.SqlClient
+Imports VSData
 Friend Module MediaTypes
     Friend Sub Run(store As DataStore)
         Do
@@ -7,17 +9,13 @@ Friend Module MediaTypes
             prompt.AddChoice(MenuItems.GoBack)
             prompt.AddChoice(MenuItems.NewMediaType)
             prompt.AddChoice(MenuItems.MediaTypeReport)
-            Dim command = store.Connection.CreateCommand
-            command.CommandText = Commands.MediaTypeList
             Dim table As New Dictionary(Of String, Integer)
-            Using reader = command.ExecuteReader
-                While reader.Read
-                    Dim mediaTypeId = reader.GetInt32(0)
-                    Dim fullName = $"{reader.GetString(1)}({reader.GetString(2)})#{mediaTypeId}"
-                    table(fullName) = mediaTypeId
-                    prompt.AddChoice(fullName)
-                End While
-            End Using
+            For Each item In store.MediaTypeList
+                Dim mediaTypeId = item.Id
+                Dim fullName = $"{item.Name}({item.Abbr})#{mediaTypeId}"
+                table(fullName) = mediaTypeId
+                prompt.AddChoice(fullName)
+            Next
             Dim answer = AnsiConsole.Prompt(prompt)
             Select Case answer
                 Case MenuItems.NewMediaType

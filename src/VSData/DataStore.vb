@@ -1,4 +1,7 @@
-﻿Imports Microsoft.Data.SqlClient
+﻿Imports System.ComponentModel
+Imports System.Reflection
+Imports Microsoft.Data.SqlClient
+Imports Microsoft.Identity.Client
 
 Public Class DataStore
     Public Property Connection As SqlConnection
@@ -30,8 +33,39 @@ Public Class DataStore
             Return result
         End Get
     End Property
+    Public ReadOnly Property MediaTypeMediaList(mediaTypeId As Integer) As IEnumerable(Of (Id As Integer, Title As String, Category As String, Collection As String))
+        Get
+            Dim results As New List(Of (Id As Integer, Title As String, Category As String, Collection As String))
+            Dim command = Connection.CreateCommand
+            command.CommandText = Commands.MediaTypeMediaList
+            command.Parameters.AddWithValue(Parameters.MediaTypeId, mediaTypeId)
+            Using reader = command.ExecuteReader
+                While reader.Read
+                    results.Add((
+                                reader.GetInt32(0),
+                                reader.GetString(1),
+                                reader.GetString(2),
+                                If(reader.IsDBNull(3), Nothing, reader.GetString(3))))
+                End While
+            End Using
+            Return results
+        End Get
+    End Property
+    Public ReadOnly Property MediaTypeList As IEnumerable(Of (Id As Integer, Abbr As String, Name As String))
+        Get
+            Dim results As New List(Of (Id As Integer, Abbr As String, Name As String))
+            Dim command = Connection.CreateCommand
+            command.CommandText = Commands.MediaTypeList
+            Using reader = command.ExecuteReader
+                While reader.Read
+                    results.Add((reader.GetInt32(0), reader.GetString(2), reader.GetString(1)))
+                End While
+            End Using
+            Return results
+        End Get
+    End Property
 
-    Friend ReadOnly Property Category(categoryId As Integer) As (Id As Integer, Abbr As String, Name As String, MediaCount As Integer)
+    Public ReadOnly Property Category(categoryId As Integer) As (Id As Integer, Abbr As String, Name As String, MediaCount As Integer)
         Get
             Dim command = Connection.CreateCommand()
             command.CommandText = CategoryDetails
@@ -47,7 +81,7 @@ Public Class DataStore
         Me.Connection = connection
     End Sub
 
-    Friend Sub ChangeCategoryAbbreviation(categoryId As Integer, newAbbreviation As String)
+    Public Sub ChangeCategoryAbbreviation(categoryId As Integer, newAbbreviation As String)
         Dim command = Connection.CreateCommand
         command.CommandText = CategoryUpdateAbbreviation
         command.Parameters.AddWithValue(Parameters.CategoryAbbr, newAbbreviation)
@@ -55,7 +89,7 @@ Public Class DataStore
         command.ExecuteNonQuery()
     End Sub
 
-    Friend Sub ChangeCategoryName(categoryId As Integer, newName As String)
+    Public Sub ChangeCategoryName(categoryId As Integer, newName As String)
         Dim command = Connection.CreateCommand
         command.CommandText = CategoryUpdateName
         command.Parameters.AddWithValue(Parameters.CategoryName, newName)
@@ -63,14 +97,14 @@ Public Class DataStore
         command.ExecuteNonQuery()
     End Sub
 
-    Friend Sub DeleteCategory(categoryId As Integer)
+    Public Sub DeleteCategory(categoryId As Integer)
         Dim command = Connection.CreateCommand
         command.CommandText = CategoryDelete
         command.Parameters.AddWithValue(Parameters.CategoryId, categoryId)
         command.ExecuteNonQuery()
     End Sub
 
-    Friend Function CheckCategoryAbbreviation(abbreviation As String) As Boolean
+    Public Function CheckCategoryAbbreviation(abbreviation As String) As Boolean
         Dim command = Connection.CreateCommand
         command.CommandText = CategoryCheckAbbreviation
         command.Parameters.AddWithValue(Parameters.CategoryAbbr, abbreviation)
@@ -78,14 +112,14 @@ Public Class DataStore
         Return result > 0
     End Function
 
-    Friend Sub CreateCategory(name As String, abbreviation As String)
+    Public Sub CreateCategory(name As String, abbreviation As String)
         Dim Command = Connection.CreateCommand
         Command.CommandText = CategoryInsert
         Command.Parameters.AddWithValue(Parameters.CategoryName, name)
         Command.Parameters.AddWithValue(Parameters.CategoryAbbr, abbreviation)
         Command.ExecuteNonQuery()
     End Sub
-    Friend ReadOnly Property MediaReport As IEnumerable(Of (MediaTitle As String, Category As String, MediaType As String, Collection As String))
+    Public ReadOnly Property MediaReport As IEnumerable(Of (MediaTitle As String, Category As String, MediaType As String, Collection As String))
         Get
             Dim command = Connection.CreateCommand
             command.CommandText = Commands.MediaReport

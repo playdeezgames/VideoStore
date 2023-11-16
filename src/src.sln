@@ -3,7 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.7.34024.191
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "VideoStore", "VideoStore\VideoStore.vbproj", "{C09E982B-A526-4399-90D8-5EDD6508915A}"
+Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "VideoStore", "VideoStore\VideoStore.vbproj", "{C09E982B-A526-4399-90D8-5EDD6508915A}"
+EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "VSTermUI", "VSTermUI\VSTermUI.vbproj", "{11104902-1324-4B66-BE2D-3FDD4A6A147E}"
+EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "VSData", "VSData\VSData.vbproj", "{45509DD9-2828-4F3D-8EDA-7E7B5B5C406B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +19,14 @@ Global
 		{C09E982B-A526-4399-90D8-5EDD6508915A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C09E982B-A526-4399-90D8-5EDD6508915A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C09E982B-A526-4399-90D8-5EDD6508915A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{11104902-1324-4B66-BE2D-3FDD4A6A147E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{11104902-1324-4B66-BE2D-3FDD4A6A147E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{11104902-1324-4B66-BE2D-3FDD4A6A147E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{11104902-1324-4B66-BE2D-3FDD4A6A147E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{45509DD9-2828-4F3D-8EDA-7E7B5B5C406B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{45509DD9-2828-4F3D-8EDA-7E7B5B5C406B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{45509DD9-2828-4F3D-8EDA-7E7B5B5C406B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{45509DD9-2828-4F3D-8EDA-7E7B5B5C406B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

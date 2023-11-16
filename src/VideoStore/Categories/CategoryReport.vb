@@ -1,4 +1,6 @@
-﻿Friend Module CategoryReport
+﻿Imports VSData
+
+Friend Module CategoryReport
     Friend Sub Run(store As DataStore)
         Utility.ExportHtml(
             "Category Report",
