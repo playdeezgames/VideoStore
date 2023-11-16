@@ -85,4 +85,21 @@ Public Class DataStore
         Command.Parameters.AddWithValue(Parameters.CategoryAbbr, abbreviation)
         Command.ExecuteNonQuery()
     End Sub
+    Friend ReadOnly Property MediaReport As IEnumerable(Of (MediaTitle As String, Category As String, MediaType As String, Collection As String))
+        Get
+            Dim command = Connection.CreateCommand
+            command.CommandText = Commands.MediaReport
+            Dim results As New List(Of (MediaTitle As String, Category As String, MediaType As String, Collection As String))
+            Using reader = command.ExecuteReader
+                While reader.Read
+                    results.Add((
+                                reader.GetString(0),
+                                reader.GetString(1),
+                                reader.GetString(2),
+                                If(reader.IsDBNull(3), String.Empty, reader.GetString(3))))
+                End While
+            End Using
+            Return results
+        End Get
+    End Property
 End Class

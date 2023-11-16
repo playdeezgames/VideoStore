@@ -22,4 +22,5 @@
     Friend Const NoCollection = "(no collection)"
     Friend Const Yes = "Yes"
     Friend Const No = "No"
+    Friend Const MediaReport = "Media Report"
 End Module

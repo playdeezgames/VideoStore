@@ -257,4 +257,15 @@ INSERT INTO
         {Parameters.MediaTypeId}
     );"
 
+    Friend ReadOnly MediaReport As String = $"
+SELECT
+    {Fields.MediaTitle},
+    {Fields.CategoryName},
+    {Fields.MediaTypeName},
+    {Fields.CollectionName}
+FROM
+    {Tables.MediaListItems}
+ORDER BY
+    {Fields.MediaTitle} ASC;"
+
 End Module

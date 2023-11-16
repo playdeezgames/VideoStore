@@ -4,4 +4,5 @@
     Friend Const Media As String = "Media"
     Friend Const CategoryListItems = "CategoryListItems"
     Friend Const MediaTypes = "MediaTypes"
+    Friend Const MediaListItems = "MediaListItems"
 End Module
