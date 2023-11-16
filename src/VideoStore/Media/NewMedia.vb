@@ -1,4 +1,6 @@
-﻿Imports Microsoft.Data.SqlClient
+﻿Imports System.Collections.ObjectModel
+Imports System.IO.Pipes
+Imports Microsoft.Data.SqlClient
 
 Friend Module NewMedia
     Friend Sub Run(store As DataStore)
@@ -36,6 +38,7 @@ Friend Module NewMedia
         End Using
         prompt.AddChoices(table.Keys)
         Dim answer = AnsiConsole.Prompt(prompt)
+        AnsiConsole.MarkupLine($"[olive]Collection:[/] {answer}")
         If answer = MenuItems.NoCollection Then
             Return Nothing
         End If
@@ -53,7 +56,9 @@ Friend Module NewMedia
             End While
         End Using
         prompt.AddChoices(table.Keys)
-        Return table(AnsiConsole.Prompt(prompt))
+        Dim answer = AnsiConsole.Prompt(prompt)
+        AnsiConsole.MarkupLine($"[olive]Category:[/] {answer}")
+        Return table(answer)
     End Function
 
     Private Function PickMediaType(store As DataStore) As Integer
@@ -67,6 +72,8 @@ Friend Module NewMedia
             End While
         End Using
         prompt.AddChoices(table.Keys)
-        Return table(AnsiConsole.Prompt(prompt))
+        Dim answer = AnsiConsole.Prompt(prompt)
+        AnsiConsole.MarkupLine($"[olive]Media Type:[/] {answer}")
+        Return table(answer)
     End Function
 End Module
