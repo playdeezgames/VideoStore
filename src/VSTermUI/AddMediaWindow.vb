@@ -17,48 +17,56 @@ Friend Class AddMediaWindow
     Public Sub New(store As DataStore)
         MyBase.New("Add Media...")
         Me.store = store
-        Dim titleLabel As New Label("Title:")
+        Dim titleLabel As New Label("Title:") With
+            {
+                .X = 1,
+                .Y = 1
+            }
         titleTextField = New TextField With
             {
                 .X = Pos.Right(titleLabel) + 1,
                 .Y = titleLabel.Y,
-                .Width = [Dim].Fill
+                .Width = [Dim].Fill - 1
             }
         Dim categoryLabel As New Label("Category:") With
             {
+                .X = 1,
                 .Y = Pos.Bottom(titleTextField) + 1
             }
         categoryComboBox = New ComboBox() With
             {
                 .X = Pos.Right(categoryLabel) + 1,
                 .Y = categoryLabel.Y,
-                .Width = [Dim].Fill
+                .Width = [Dim].Fill - 1
             }
         UpdateCategoryComboBox()
         Dim mediaTypeLabel As New Label("Media Type:") With
             {
+                .X = 1,
                 .Y = Pos.Bottom(categoryLabel) + 1
             }
         mediaTypeComboBox = New ComboBox With
             {
                 .Y = mediaTypeLabel.Y,
                 .X = Pos.Right(mediaTypeLabel) + 1,
-                .Width = [Dim].Fill
+                .Width = [Dim].Fill - 1
             }
         UpdateMediaTypeComboBox()
         Dim collectionLabel As New Label("Collection:") With
             {
+                .X = 1,
                 .Y = Pos.Bottom(mediaTypeLabel) + 1
             }
         collectionComboBox = New ComboBox With
             {
                 .Y = collectionLabel.Y,
                 .X = Pos.Right(collectionLabel) + 1,
-                .Width = [Dim].Fill
+                .Width = [Dim].Fill - 1
             }
         UpdateCollectionComboBox()
         Dim addButton As New Button("Add") With
             {
+                .X = 1,
                 .Y = Pos.Bottom(collectionLabel) + 1
             }
         AddHandler addButton.Clicked, AddressOf OnAddButtonClicked
@@ -70,12 +78,14 @@ Friend Class AddMediaWindow
         AddHandler cancelButton.Clicked, AddressOf OnCancelButtonClicked
         Dim recentlyAddedLabel As New Label("Recently Added:") With
             {
+                .X = 1,
                 .Y = Pos.Bottom(addButton) + 1
             }
         recentListView = New ListView With
             {
+                .X = 1,
                 .Y = Pos.Bottom(recentlyAddedLabel) + 1,
-                .Width = [Dim].Fill,
+                .Width = [Dim].Fill - 1,
                 .Height = [Dim].Fill,
                 .CanFocus = False
             }
