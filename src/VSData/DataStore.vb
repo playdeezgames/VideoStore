@@ -1,7 +1,4 @@
-﻿Imports System.ComponentModel
-Imports System.Reflection
-Imports Microsoft.Data.SqlClient
-Imports Microsoft.Identity.Client
+﻿Imports Microsoft.Data.SqlClient
 
 Public Class DataStore
     Public Property Connection As SqlConnection
