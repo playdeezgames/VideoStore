@@ -2,78 +2,50 @@
 Imports VSData
 
 Friend Class MainWindow
-    Inherits Toplevel
+    Inherits Window
     Private ReadOnly store As DataStore
-    Private ReadOnly categoriesMenuBarItem As MenuBarItem
-    Private ReadOnly panelView As PanelView
-    Private ReadOnly mediaTypesMenuBarItem As MenuBarItem
     Sub New(store As DataStore)
+        MyBase.New("Video Store")
         Me.store = store
-        categoriesMenuBarItem = New MenuBarItem() With
-                    {
-                        .Title = "Categories"
-                    }
-        mediaTypesMenuBarItem = New MenuBarItem() With
-                    {
-                        .Title = "Media Types"
-                    }
-        UpdateCategoryMenu()
-        UpdateMediaTypesMenu()
-
-        Dim menuBar = New MenuBar With
+        Dim categoriesButton As New Button() With
             {
-                .Menus = New MenuBarItem() {
-                    categoriesMenuBarItem,
-                    mediaTypesMenuBarItem
-                }
+                .Text = "_Categories..."
             }
-        panelView = New PanelView With
+        AddHandler categoriesButton.Clicked, AddressOf OnCategoriesButtonClicked
+        Dim mediaTypesButton As New Button() With
             {
-                .Text = "I am a panel",
-                .Y = 1,
-                .Width = [Dim].Fill,
-                .Height = [Dim].Fill - 1
+                .Text = "Media _Types...",
+                .Y = Pos.Bottom(categoriesButton) + 1
             }
-        Add(menuBar, panelView)
-    End Sub
-
-    Private Sub UpdateMediaTypesMenu()
-        Dim children As New List(Of MenuItem)
-        For Each item In store.MediaTypeList
-            children.Add(New MenuItem() With {
-                .Title = $"{item.Abbr} - {item.Name}",
-                .Action = Sub()
-                              ShowMediaType(item.Id)
-                          End Sub
-            })
-        Next
-        mediaTypesMenuBarItem.Children = children.ToArray
-    End Sub
-
-    Private Sub ShowMediaType(mediaTypeId As Integer)
-        panelView.RemoveAll()
-        Dim listView As New ListView(store.MediaTypeMediaList(mediaTypeId).ToList) With
+        AddHandler mediaTypesButton.Clicked, AddressOf OnMediaTypesButtonClicked
+        Dim collectionsButton As New Button() With
             {
-                .Width = [Dim].Fill,
-                .Height = [Dim].Fill
+                .Text = "C_ollections...",
+                .Y = Pos.Bottom(mediaTypesButton) + 1
             }
-        panelView.Add(listView)
+        AddHandler collectionsButton.Clicked, AddressOf OnCollectionsButtonClicked
+        Dim mediaButton As New Button() With
+            {
+                .Text = "_Media...",
+                .Y = Pos.Bottom(collectionsButton) + 1
+            }
+        AddHandler mediaButton.Clicked, AddressOf OnMediaButtonClicked
+        Add(categoriesButton, mediaTypesButton, collectionsButton, mediaButton)
     End Sub
 
-    Private Sub UpdateCategoryMenu()
-        Dim children As New List(Of MenuItem)
-        For Each item In store.CategoryList
-            children.Add(New MenuItem() With {
-                .Title = $"{item.Abbr} - {item.Name}",
-                .Action = Sub()
-                              ShowCategory(item.Id)
-                          End Sub
-            })
-        Next
-        categoriesMenuBarItem.Children = children.ToArray
-    End Sub
-
-    Private Sub ShowCategory(categoryId As Integer)
+    Private Sub OnMediaButtonClicked()
         Throw New NotImplementedException()
     End Sub
+
+    Private Sub OnCollectionsButtonClicked()
+        Throw New NotImplementedException()
+    End Sub
+
+    Private Sub OnMediaTypesButtonClicked()
+        Throw New NotImplementedException()
+    End Sub
+
+    Private Function OnCategoriesButtonClicked() As Object
+        Application.Run(New CategoriesWindow(store))
+    End Function
 End Class
