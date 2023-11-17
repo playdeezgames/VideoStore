@@ -48,10 +48,10 @@ Friend Class AddCategoryWindow
     End Sub
 
     Private Sub OnOkButtonClicked()
-        If store.CheckCategoryAbbreviation(abbrTextField.Text) Then
+        If store.CheckCategoryAbbreviation(abbrTextField.Text.ToString) Then
             MessageBox.ErrorQuery("Error!", "Duplicate Abbreviation!", "Ok")
         Else
-            store.CreateCategory(nameTextField.Text, abbrTextField.Text)
+            store.CreateCategory(nameTextField.Text.ToString, abbrTextField.Text.ToString)
             Application.RequestStop()
         End If
     End Sub

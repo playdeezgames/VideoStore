@@ -111,7 +111,7 @@ Friend Class AddMediaWindow
     End Sub
 
     Private Sub UpdateCollectionComboBox()
-        collections = store.CollectionList
+        collections = store.CollectionList.ToList
         collectionComboBox.SetSource(collections.Select(AddressOf ToCollectionItem).ToList)
     End Sub
 
@@ -120,7 +120,7 @@ Friend Class AddMediaWindow
     End Function
 
     Private Sub UpdateMediaTypeComboBox()
-        mediaTypes = store.MediaTypeList
+        mediaTypes = store.MediaTypeList.ToList
         mediaTypeComboBox.SetSource(mediaTypes.Select(AddressOf ToMediaTypeItem).ToList)
     End Sub
 
@@ -129,7 +129,7 @@ Friend Class AddMediaWindow
     End Function
 
     Private Sub UpdateCategoryComboBox()
-        categories = store.CategoryList
+        categories = store.CategoryList.ToList
         categoryComboBox.SetSource(categories.Select(AddressOf ToCategoryItem).ToList)
     End Sub
 
@@ -139,7 +139,7 @@ Friend Class AddMediaWindow
     End Function
 
     Private Sub OnAddButtonClicked()
-        If String.IsNullOrEmpty(titleTextField.Text) Then
+        If String.IsNullOrEmpty(titleTextField.Text.ToString) Then
             Return
         End If
         If categoryComboBox.SelectedItem = -1 Then
@@ -152,8 +152,8 @@ Friend Class AddMediaWindow
         If collectionComboBox.SelectedItem > -1 Then
             collectionId = collections(collectionComboBox.SelectedItem).Id
         End If
-        recentlyAddedItems.Insert(0, titleTextField.Text)
-        store.AddMedia(titleTextField.Text, categories(categoryComboBox.SelectedItem).Id, mediaTypes(mediaTypeComboBox.SelectedItem).Id, collectionId)
+        recentlyAddedItems.Insert(0, titleTextField.Text.ToString)
+        store.AddMedia(titleTextField.Text.ToString, categories(categoryComboBox.SelectedItem).Id, mediaTypes(mediaTypeComboBox.SelectedItem).Id, collectionId)
         titleTextField.Text = String.Empty
         categoryComboBox.SelectedItem = -1
         mediaTypeComboBox.SelectedItem = -1
@@ -162,6 +162,6 @@ Friend Class AddMediaWindow
     End Sub
 
     Private Sub OnCancelButtonClicked()
-        Application.RequestStop()
+        SuperView.Remove(Me)
     End Sub
 End Class

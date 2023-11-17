@@ -1,5 +1,4 @@
 ﻿Imports Microsoft.Data.SqlClient
-Imports Microsoft.Identity.Client
 
 Public Class DataStore
     Public Property Connection As SqlConnection
@@ -159,5 +158,23 @@ Public Class DataStore
             Return result
         End Get
     End Property
-
+    Public ReadOnly Property TitleSearch(filter As String) As IEnumerable(Of (Id As Integer, Title As String, Category As String, MediaType As String, Collection As String))
+        Get
+            Dim result As New List(Of (Id As Integer, Title As String, Category As String, MediaType As String, Collection As String))
+            Dim command = Connection.CreateCommand
+            command.CommandText = Commands.TitleSearch
+            command.Parameters.AddWithValue(Parameters.NameFilter, filter)
+            Using reader = command.ExecuteReader()
+                While reader.Read
+                    result.Add((
+                               reader.GetInt32(0),
+                               reader.GetString(1),
+                               reader.GetString(2),
+                               reader.GetString(3),
+                               If(reader.IsDBNull(4), Nothing, reader.GetString(4))))
+                End While
+            End Using
+            Return result
+        End Get
+    End Property
 End Class

@@ -281,4 +281,18 @@ FROM
 WHERE
     m.{Fields.MediaTypeId}={Parameters.MediaTypeId};"
 
+    Friend ReadOnly TitleSearch As String = $"
+SELECT
+    {Fields.MediaId},
+    {Fields.MediaTitle},
+    {Fields.CategoryName},
+    {Fields.MediaTypeName},
+    {Fields.CollectionName}
+FROM
+    {Tables.MediaListItems}
+WHERE
+    {Fields.MediaTitle} LIKE {Parameters.NameFilter}
+ORDER BY
+    {Fields.MediaTitle} ASC;"
+
 End Module

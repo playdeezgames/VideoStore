@@ -72,15 +72,15 @@ Friend Class EditCategoryWindow
 
     Private Sub OnDoneButtonClicked()
         If originalAbbr <> abbrTextField.Text Then
-            If store.CheckCategoryAbbreviation(abbrTextField.Text) Then
+            If store.CheckCategoryAbbreviation(abbrTextField.Text.ToString) Then
                 MessageBox.ErrorQuery("Error!", "Duplicate Abbreviation!", "Ok")
                 Return
             Else
-                store.ChangeCategoryAbbreviation(categoryId, abbrTextField.Text)
+                store.ChangeCategoryAbbreviation(categoryId, abbrTextField.Text.ToString)
             End If
         End If
         If originalName <> nameTextField.Text Then
-            store.ChangeCategoryName(categoryId, nameTextField.Text)
+            store.ChangeCategoryName(categoryId, nameTextField.Text.ToString)
         End If
         Application.RequestStop()
     End Sub
