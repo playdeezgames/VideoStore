@@ -34,7 +34,7 @@ Friend Class MainWindow
     End Sub
 
     Private Sub OnMediaButtonClicked()
-        Throw New NotImplementedException()
+        Application.Run(New MediaWindow(store))
     End Sub
 
     Private Sub OnCollectionsButtonClicked()
@@ -45,7 +45,7 @@ Friend Class MainWindow
         Throw New NotImplementedException()
     End Sub
 
-    Private Function OnCategoriesButtonClicked() As Object
+    Private Sub OnCategoriesButtonClicked()
         Application.Run(New CategoriesWindow(store))
-    End Function
+    End Sub
 End Class

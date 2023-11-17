@@ -1,4 +1,5 @@
 ﻿Imports Microsoft.Data.SqlClient
+Imports Microsoft.Identity.Client
 
 Public Class DataStore
     Public Property Connection As SqlConnection
@@ -133,4 +134,30 @@ Public Class DataStore
             Return results
         End Get
     End Property
+    Public Sub AddMedia(mediaTitle As String, categoryId As Integer, mediaTypeId As Integer, collectionId As Integer?)
+        Dim command = Connection.CreateCommand
+        command.CommandText = If(collectionId.HasValue, Commands.MediaInsertWithCollection, Commands.MediaInsert)
+        command.Parameters.AddWithValue(Parameters.MediaTitle, mediaTitle)
+        command.Parameters.AddWithValue(Parameters.MediaTypeId, mediaTypeId)
+        command.Parameters.AddWithValue(Parameters.CategoryId, categoryId)
+        If collectionId.HasValue Then
+            command.Parameters.AddWithValue(Parameters.CollectionId, collectionId.Value)
+        End If
+        command.ExecuteNonQuery()
+    End Sub
+    Public ReadOnly Property CollectionList As IEnumerable(Of (Id As Integer, Name As String))
+        Get
+            Dim result As New List(Of (Id As Integer, Name As String))
+            Dim command = Connection.CreateCommand
+            command.CommandText = Commands.CollectionList
+            command.Parameters.AddWithValue(Parameters.NameFilter, "%")
+            Using reader = command.ExecuteReader()
+                While reader.Read
+                    result.Add((reader.GetInt32(0), reader.GetString(1)))
+                End While
+            End Using
+            Return result
+        End Get
+    End Property
+
 End Class
