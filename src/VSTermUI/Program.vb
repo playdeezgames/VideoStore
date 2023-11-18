@@ -3,6 +3,7 @@ Imports Terminal.Gui
 Module Program
     Sub Main(args As String())
         Console.Title = "Video Store Terminal UI"
+        Dim window As Window = Nothing
         Using connection As New SqlConnection("Data Source=.\SQLEXPRESS;Initial Catalog=MediaLibrary;Integrated Security=true;TrustServerCertificate=true")
             connection.Open()
             Application.Init()
@@ -17,21 +18,23 @@ Module Program
                                 "_Intake...",
                                 String.Empty,
                                 Sub()
-                                    If Application.Top.Subviews.Any(Function(x) x.Text = "Add Media...") Then
-                                        Application.Top.Subviews.Single(Function(x) x.Text = "Add Media...").SetFocus()
-                                    Else
-                                        Application.Top.Add(New AddMediaWindow(store))
+                                    If window IsNot Nothing Then
+                                        Application.Top.Remove(window)
+                                        window = Nothing
                                     End If
+                                    window = New AddMediaWindow(store)
+                                    Application.Top.Add(window)
                                 End Sub),
                             New MenuItem(
                                 "_Search...",
                                 String.Empty,
                                 Sub()
-                                    If Application.Top.Subviews.Any(Function(x) x.Text = "Title Search...") Then
-                                        Application.Top.Subviews.Single(Function(x) x.Text = "Title Search...").SetFocus()
-                                    Else
-                                        Application.Top.Add(New TitleSearchWindow(store))
+                                    If window IsNot Nothing Then
+                                        Application.Top.Remove(window)
+                                        window = Nothing
                                     End If
+                                    window = New TitleSearchWindow(store)
+                                    Application.Top.Add(window)
                                 End Sub)})}))
             Application.Run()
             Application.Shutdown()
