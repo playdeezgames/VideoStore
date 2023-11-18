@@ -17,7 +17,7 @@ Friend Class AddMediaWindow
     Public Sub New(store As DataStore)
         MyBase.New("Add Media...")
         Me.store = store
-        Dim titleLabel As New Label("Title:") With
+        Dim titleLabel As New Label("     Title:") With
             {
                 .X = 1,
                 .Y = 1
@@ -28,7 +28,7 @@ Friend Class AddMediaWindow
                 .Y = titleLabel.Y,
                 .Width = [Dim].Fill - 1
             }
-        Dim categoryLabel As New Label("Category:") With
+        Dim categoryLabel As New Label("  Category:") With
             {
                 .X = 1,
                 .Y = Pos.Bottom(titleTextField) + 1
