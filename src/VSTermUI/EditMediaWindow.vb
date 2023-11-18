@@ -89,9 +89,12 @@ Friend Class EditMediaWindow
         Dim newTitle As String = titleTextField.Text.ToString
         Dim newCategoryId As Integer = categories(categoryComboBox.SelectedItem).Id
         Dim newMediaTypeId As Integer = mediaTypes(mediaTypeComboBox.SelectedItem).Id
-        Dim newCollectionId As Integer? = If(collectionComboBox.SelectedItem = -1, Nothing, collections(collectionComboBox.SelectedItem).Id)
+        Dim newCollectionId As Integer? = Nothing
+        If collectionComboBox.SelectedItem > -1 Then
+            newCollectionId = collections(collectionComboBox.SelectedItem).Id
+        End If
         store.UpdateMedia(mediaId, newTitle, newCategoryId, newMediaTypeId, newCollectionId)
-        SuperView.Remove(Me)
+        Program.PopWindow()
     End Sub
 
     Private Sub UpdateCollectionComboBox(collectionId As Integer?)

@@ -3,6 +3,7 @@ Imports Terminal.Gui
 Imports VSData
 Module Program
     Public window As Window = Nothing
+    Public windowStack As New Stack(Of Window)
     Public store As DataStore = Nothing
     Sub Main(args As String())
         Console.Title = "Video Store Terminal UI"
@@ -36,6 +37,15 @@ Module Program
         End If
         window = newWindow
         Application.Top.Add(window)
+    End Sub
+    Sub PushWindow(newWindow As Window)
+        If window IsNot Nothing Then
+            windowStack.Push(window)
+        End If
+        GoToWindow(newWindow)
+    End Sub
+    Sub PopWindow()
+        GoToWindow(windowStack.Pop)
     End Sub
     Sub ShowAddMediaWindow()
         GoToWindow(New AddMediaWindow(store))

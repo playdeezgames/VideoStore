@@ -38,7 +38,7 @@ Friend Class TitleSearchWindow
 
     Private Sub OnResultsListViewOpenSelectedItem(args As ListViewItemEventArgs)
         Dim mediaId = CType(args.Value, TitleSearchItem).TitleSearchItem.Id
-        Program.GoToWindow(New EditMediaWindow(Program.store, mediaId))
+        Program.PushWindow(New EditMediaWindow(Program.store, mediaId))
     End Sub
 
     Private Sub OnFilterTextFieldTextChanged(text As ustring)
