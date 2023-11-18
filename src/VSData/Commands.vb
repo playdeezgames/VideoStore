@@ -307,4 +307,44 @@ FROM
 WHERE
     {Fields.MediaId}={Parameters.MediaId};"
 
+    Friend ReadOnly UpdateMediaCollection As String = $"
+UPDATE
+    {Tables.Media}
+SET
+    {Fields.CollectionId}={Parameters.CollectionId}
+WHERE
+    {Fields.MediaId}={Parameters.MediaId};"
+
+    Friend ReadOnly UpdateMediaCategory As String = $"
+UPDATE
+    {Tables.Media}
+SET
+    {Fields.CategoryId }={Parameters.CategoryId}
+WHERE
+    {Fields.MediaId}={Parameters.MediaId};"
+
+    Friend ReadOnly UpdateMediaMediaType As String = $"
+UPDATE
+    {Tables.Media}
+SET
+    {Fields.MediaTypeId }={Parameters.MediaTypeId}
+WHERE
+    {Fields.MediaId}={Parameters.MediaId};"
+
+    Friend ReadOnly UpdateMediaTitle As String = $"
+UPDATE
+    {Tables.Media}
+SET
+    {Fields.MediaTitle }={Parameters.MediaTitle}
+WHERE
+    {Fields.MediaId}={Parameters.MediaId};"
+
+    Friend ReadOnly NullifyMediaCollection As String = $"
+UPDATE
+    {Tables.Media}
+SET
+    {Fields.CollectionId}=NULL
+WHERE
+    {Fields.MediaId}={Parameters.MediaId};"
+
 End Module

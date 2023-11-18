@@ -145,6 +145,50 @@ Public Class DataStore
         End If
         command.ExecuteNonQuery()
     End Sub
+
+    Public Sub UpdateMedia(mediaId As Integer, newTitle As String, newCategoryId As Integer, newMediaTypeId As Integer, newCollectionId As Integer?)
+        UpdateMediaTitle(mediaId, newTitle)
+        UpdateMediaCategory(mediaId, newCategoryId)
+        UpdateMediaMediaType(mediaId, newMediaTypeId)
+        UpdateMediaCollection(mediaId, newCollectionId)
+    End Sub
+
+    Private Sub UpdateMediaCollection(mediaId As Integer, collectionId As Integer?)
+        Dim command = Connection.CreateCommand
+        If collectionId.HasValue Then
+            command.CommandText = Commands.UpdateMediaCollection
+            command.Parameters.AddWithValue(Parameters.CollectionId, collectionId.Value)
+        Else
+            command.CommandText = Commands.NullifyMediaCollection
+        End If
+        command.Parameters.AddWithValue(Parameters.MediaId, mediaId)
+        command.ExecuteNonQuery()
+    End Sub
+
+    Private Sub UpdateMediaMediaType(mediaId As Integer, mediaTypeId As Integer)
+        Dim command = Connection.CreateCommand
+        command.CommandText = Commands.UpdateMediaMediaType
+        command.Parameters.AddWithValue(Parameters.MediaTypeId, mediaTypeId)
+        command.Parameters.AddWithValue(Parameters.MediaId, mediaId)
+        command.ExecuteNonQuery()
+    End Sub
+
+    Private Sub UpdateMediaCategory(mediaId As Integer, categoryId As Integer)
+        Dim command = Connection.CreateCommand
+        command.CommandText = Commands.UpdateMediaCategory
+        command.Parameters.AddWithValue(Parameters.CategoryId, categoryId)
+        command.Parameters.AddWithValue(Parameters.MediaId, mediaId)
+        command.ExecuteNonQuery()
+    End Sub
+
+    Private Sub UpdateMediaTitle(mediaId As Integer, title As String)
+        Dim command = Connection.CreateCommand
+        command.CommandText = Commands.UpdateMediaTitle
+        command.Parameters.AddWithValue(Parameters.MediaTitle, title)
+        command.Parameters.AddWithValue(Parameters.MediaId, mediaId)
+        command.ExecuteNonQuery()
+    End Sub
+
     Public ReadOnly Property CollectionList As IEnumerable(Of (Id As Integer, Name As String))
         Get
             Dim result As New List(Of (Id As Integer, Name As String))
@@ -178,14 +222,15 @@ Public Class DataStore
             Return result
         End Get
     End Property
-    Public ReadOnly Property Media(mediaId As Integer) As (Id As Integer, Title As String, CategoryId As Integer)?
+    Public ReadOnly Property Media(mediaId As Integer) As (Id As Integer, Title As String, CategoryId As Integer, MediaTypeId As Integer, CollectionId As Integer?)?
         Get
             Dim command = Connection.CreateCommand
             command.CommandText = Commands.MediaById
             command.Parameters.AddWithValue(Parameters.MediaId, mediaId)
             Using reader = command.ExecuteReader
                 If reader.Read Then
-                    Return (reader.GetInt32(0), reader.GetString(1), reader.GetInt32(2))
+                    Dim collectionId As Integer? = If(reader.IsDBNull(4), Nothing, reader.GetInt32(4))
+                    Return (reader.GetInt32(0), reader.GetString(1), reader.GetInt32(2), reader.GetInt32(3), CollectionId)
                 End If
             End Using
             Return Nothing
