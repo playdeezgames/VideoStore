@@ -295,4 +295,16 @@ WHERE
 ORDER BY
     {Fields.MediaTitle} ASC;"
 
+    Friend ReadOnly MediaById As String = $"
+SELECT
+    m.{Fields.MediaId},
+    m.{Fields.MediaTitle},
+    m.{Fields.CategoryId},
+    m.{Fields.MediaTypeId},
+    m.{Fields.CollectionId}
+FROM
+    {Tables.Media} m
+WHERE
+    {Fields.MediaId}={Parameters.MediaId};"
+
 End Module

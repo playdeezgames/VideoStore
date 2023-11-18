@@ -1,4 +1,5 @@
-﻿Imports Microsoft.Data.SqlClient
+﻿Imports System.Reflection
+Imports Microsoft.Data.SqlClient
 
 Public Class DataStore
     Public Property Connection As SqlConnection
@@ -177,4 +178,18 @@ Public Class DataStore
             Return result
         End Get
     End Property
+    Public ReadOnly Property Media(mediaId As Integer) As (Id As Integer, Title As String, CategoryId As Integer)?
+        Get
+            Dim command = Connection.CreateCommand
+            command.CommandText = Commands.MediaById
+            command.Parameters.AddWithValue(Parameters.MediaId, mediaId)
+            Using reader = command.ExecuteReader
+                If reader.Read Then
+                    Return (reader.GetInt32(0), reader.GetString(1), reader.GetInt32(2))
+                End If
+            End Using
+            Return Nothing
+        End Get
+    End Property
+
 End Class

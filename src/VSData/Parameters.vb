@@ -9,4 +9,5 @@
     Public Const MediaTypeName As String = "@MediaTypeName"
     Public Const NameFilter As String = "@NameFilter"
     Public Const MediaTitle As String = "@MediaTitle"
+    Public Const MediaId As String = "@MediaId"
 End Module

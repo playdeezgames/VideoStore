@@ -31,8 +31,14 @@ Friend Class TitleSearchWindow
                 .Width = [Dim].Fill - 1,
                 .Height = [Dim].Fill - 1
             }
+        AddHandler resultsListView.OpenSelectedItem, AddressOf OnResultsListViewOpenSelectedItem
         UpdateResultsListView()
         Add(filterLabel, filterTextField, resultsListView)
+    End Sub
+
+    Private Sub OnResultsListViewOpenSelectedItem(args As ListViewItemEventArgs)
+        Dim mediaId = CType(args.Value, TitleSearchItem).TitleSearchItem.Id
+        Program.GoToWindow(New EditMediaWindow(Program.store, mediaId))
     End Sub
 
     Private Sub OnFilterTextFieldTextChanged(text As ustring)
