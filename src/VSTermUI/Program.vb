@@ -24,12 +24,23 @@ Module Program
                             New MenuItem(
                                 "_Search...",
                                 String.Empty,
-                                AddressOf ShowTitleSearchWindow)})}))
+                                AddressOf ShowTitleSearchWindow)}),
+                    New MenuBarItem("_Reports",
+                        New MenuItem() {
+                            New MenuItem(
+                                "_Inventory",
+                                String.Empty,
+                                AddressOf RunInventoryReport)})}))
             Application.Run()
             Application.Shutdown()
             connection.Close()
         End Using
     End Sub
+
+    Private Sub RunInventoryReport()
+        InventoryReport.Run(store)
+    End Sub
+
     Sub GoToWindow(newWindow As Window)
         If window IsNot Nothing Then
             Application.Top.Remove(window)
